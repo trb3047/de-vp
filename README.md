@@ -1,12 +1,20 @@
-###### de-vp project
+# de-vp project
 
 이 프로젝트는 개발자를 위한 교재 혹은 커뮤니티, Cheat Sheet가 될 것입니다.
 
 ----
 
-##### 주요 기능
+### 사용 기술
+
+- 프론트엔드 : react, javascript, tailwindcss
+- 백엔드 : nodejs, MySQL, nginx, AWS EC2, amazon linux
+
+----
+
+### 주요 기능
 
 일반 사용자와 주니어 개발자는 편의상 나눠놨지만 같은 권한 레벨을 가질 예정입니다.
+
 해당 레벨의 기능은 모든 사용자가 이용 가능합니다.
 
 #### 일반 사용자
@@ -39,13 +47,6 @@
 2. 특정 게시글 비공개 기능
 3. 특정 사용자 비공개, 접속 차단 기능
 4. 시니어 개발자 권한 부여
-
-----
-
-#### 사용 기술
-
-- 프론트엔드 : react, javascript, tailwindcss
-- 백엔드 : nodejs, MySQL, nginx, AWS EC2, amazon linux
 
 ----
 
