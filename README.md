@@ -4,14 +4,14 @@
 
 ----
 
-## 사용 기술
+### 사용 기술
 
 - 프론트엔드 : react, javascript, tailwindcss
 - 백엔드 : nodejs, MySQL, nginx, AWS EC2, amazon linux
 
 ----
 
-## 주요 기능
+### 주요 기능
 
 일반 사용자와 주니어 개발자는 편의상 나눠놨지만 같은 권한 레벨을 가질 예정입니다.
 
