@@ -1,0 +1,9 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* layout */
+@import './css/layout.css';
+@import './css/button.css';
+@import './css/inputBox.css';
+

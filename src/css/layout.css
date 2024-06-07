@@ -1,0 +1,50 @@
+.blind {
+    @apply overflow-hidden opacity-0 w-0 h-0 absolute -top-10 -right-10;
+}
+.container {
+    @apply max-w-full;
+}
+.container > main {
+    @apply max-w-screen-xl ml-auto mr-auto pt-5 pb-5;
+}
+
+/* 메뉴 */
+.gnb dd + dd {
+    @apply ml-2;
+}
+.gnb a {
+    @apply block p-2 relative;
+}
+.gnb a:hover::after {
+    content:'';
+    @apply block absolute bottom-0 left-0 w-full h-1 bg-blue-200;
+}
+.snb a {
+    @apply text-gray-500 text-sm;
+}
+.snb a:hover {
+    @apply underline;
+}
+.snb dd + dd {
+    @apply ml-2;
+}
+
+/* 카테고리 */
+.category {
+    @apply relative;
+}
+.category label {
+    @apply inline-block p-1 text-sm border rounded-md cursor-pointer;
+}
+.category label ~ label {
+    @apply ml-2;
+}
+.category input {
+    @apply absolute -top-10 -right-10 opacity-0 w-0 h-0;
+}
+.category input:checked + label, .category label:hover {
+    @apply bg-blue-400 border-blue-400 text-white;
+}
+.category.sort input:checked + label, .category.sort label:hover {
+    @apply bg-gray-400 border-gray-400;
+}
