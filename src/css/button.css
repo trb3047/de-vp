@@ -1,0 +1,23 @@
+.btn {
+    @apply inline-block p-2 bg-gray-400 text-white rounded-md;
+}
+.btn.apply {
+    @apply bg-blue-500;
+}
+.btn.join {
+    @apply bg-green-500;
+}
+.btn + .btn {
+    @apply ml-2;
+}
+
+/* 버튼 효과 */
+.btn:hover {
+    @apply bg-gray-300;
+}
+.btn.apply:hover {
+    @apply bg-blue-400;
+}
+.btn.join:hover {
+    @apply bg-green-400;
+}

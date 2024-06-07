@@ -1,0 +1,21 @@
+.input {
+    @apply p-2 border border-gray-400 rounded-md;
+}
+.inputBox {
+    @apply text-left;
+}
+.inputBox li {
+    @apply overflow-hidden;
+}
+.inputBox li p {
+    @apply text-gray-500;
+}
+.inputBox li + li {
+    @apply mt-2;
+}
+.inputBox label {
+    @apply w-2/6 float-left block p-2;
+}
+.inputBox input {
+    @apply w-4/6 float-left text-black; 
+}
