@@ -1,4 +1,6 @@
 import React from 'react';
+//보안 강화한 local storage
+import secureLocalStorage from 'react-secure-storage';
 
 //상단 레이아웃
 /* 
@@ -18,31 +20,38 @@ sub menu
 
 카테고리, 태그 분류 계정 정보에 저장돼야 함
 */
-export default class Header extends React.Component {
-    render() {
-        return (
-            <React.StrictMode>
-            <header className='pt-10 shadow-md relative'>
-                <div className='text-center'>
-                    <h1 className='text-3xl font-bold'><a href='./'>DE-VP</a></h1>
-                    <p className='text-sm mt-2'>deep information for developer</p>
-                </div>
-                <nav className='mt-8 border-t'>
-                    <dl className='gnb flex justify-center'>
-                        <dt className='blind'>메인 메뉴</dt>
-                        <dd><a href='#'>인증 Code</a></dd>
-                        <dd><a href='#'>Code</a></dd>
-                    </dl>
-                    <dl className='snb absolute top-1 right-2 flex justify-end'>
-                        <dt className='blind'>서브 메뉴</dt>
-                        <dd><a href='/login'>로그인</a></dd>
-                        <dd><a href='/join'>회원가입</a></dd>
-                        <dd><a href='/contact'>Contact</a></dd>
-                    </dl>
-                </nav>
-            </header>
-            </React.StrictMode>
-        );
-    }
-  
-  }
+export default function Header() {
+    const secureStorage = secureLocalStorage.default;
+    const userLevel = secureStorage.getItem('level');
+
+    return (
+        <header className='pt-10 shadow-md relative'>
+            <div className='text-center'>
+                <h1 className='text-3xl font-bold'><a href='./'>DE-VP</a></h1>
+                <p className='text-sm mt-2'>deep information for developer</p>
+            </div>
+            <nav className='mt-8 border-t'>
+                <dl className='gnb flex justify-center'>
+                    <dt className='blind'>메인 메뉴</dt>
+                    <dd><a href='#'>인증 Code</a></dd>
+                    <dd><a href='#'>Code</a></dd>
+                </dl>
+                <dl className='snb absolute top-1 right-2 flex justify-end'>
+                    <dt className='blind'>서브 메뉴</dt>
+                    {(() => {
+                        if(userLevel) return <dd><a href='/logout'>로그아웃</a></dd>;
+                        else {
+                            return (
+                                <React.StrictMode>
+                                <dd><a href='/login'>로그인</a></dd>
+                                <dd><a href='/join'>회원가입</a></dd>
+                                </React.StrictMode>
+                            )
+                        }
+                    })()}
+                    <dd><a href='/contact'>Contact</a></dd>
+                </dl>
+            </nav>
+        </header>
+    );
+}
