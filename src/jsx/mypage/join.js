@@ -98,27 +98,28 @@ export default function PageJoin() {
         if(pw !== pw2) return alert('비밀번호가 일치하지 않습니다');
         if(!email) return alert('이메일 주소를 입력해 주세요');
         if(!emailReg.test(email)) return alert('이메일 형식을 맞춰서 입력해 주세요');
-        if(pw === pw2) {
-            try {
-                //회원가입 정보를 해당 경로로 보내기
-                //미리 설정해놓은 라우터가 받음, 포트 관련 문제 발생 시 프록시 설정하기
-                const res = await fetch('/api/signup', {
-                    method: 'POST',
-                    body: JSON.stringify({ userID: id, userPW: pw, userNick: nick, userEmail: email, level: 1 }),
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                //라우터를 통해 컨트롤러에서 답변을 json으로 받아옴
-                const data = await res.json();
 
-                //가입 성공, 메인페이지로 리다이렉트
+        try {
+            //회원가입 정보를 해당 경로로 보내기
+            //미리 설정해놓은 라우터가 받음, 포트 관련 문제 발생 시 프록시 설정하기
+            const res = await fetch('/api/signup', {
+                method: 'POST',
+                body: JSON.stringify({ userID: id, userPW: pw, userNick: nick, userEmail: email, level: 1 }),
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            //라우터를 통해 컨트롤러에서 답변을 json으로 받아옴
+            const data = await res.json();
+
+            //가입 성공, 메인페이지로 리다이렉트
+            if (data.status === 200) {
                 alert(data);
-                if (res.status === 200) navigate('/');
-            } 
-            //에러 처리, 이 경우에는 브라우저 콘솔에 나온다
-            catch(err) {
-                console.log(err);
+                navigate('/');
             }
+        } 
+        //에러 처리, 이 경우에는 브라우저 콘솔에 나온다
+        catch(err) {
+            console.log(err);
         }
     }
     return (    
