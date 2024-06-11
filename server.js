@@ -13,11 +13,6 @@ app.use(express.json());
 //사용할 url scope에 연결
 app.use('/api', userRouter);
 
-
-app.get('/', (req, res) => {
-    res.send('<h2>welcem to server</h2>');
-});
-
 app.listen(port, () => {
     console.log('SERVER 실행됨 port:'+port);
 });
