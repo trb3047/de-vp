@@ -19,11 +19,3 @@
 .inputBox input {
     @apply w-4/6 float-left text-black; 
 }
-
-.input.success {
-    @apply border-green-400;
-}
-
-.input.fail {
-    @apply border-red-400;
-}

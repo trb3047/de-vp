@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../header.js';
 import Footer from '../footer.js';
@@ -96,7 +95,7 @@ export default function PageJoin() {
         if(!okId) return alert('ID 중복 확인을 해 주세요');
         if(!okNick) return alert('닉네임 중복 확인을 해 주세요');
         if(!pwReg.test(pw)) return alert('8~16자리의 영문, 숫자, 특수문자를 조합해야 합니다');
-        if(pw != pw2) return alert('비밀번호가 일치하지 않습니다');
+        if(pw !== pw2) return alert('비밀번호가 일치하지 않습니다');
         if(!email) return alert('이메일 주소를 입력해 주세요');
         if(!emailReg.test(email)) return alert('이메일 형식을 맞춰서 입력해 주세요');
         if(pw === pw2) {
