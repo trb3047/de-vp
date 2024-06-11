@@ -4,6 +4,7 @@ import React from 'react';
 export default class Footer extends React.Component  {
     render() {
         return (
+            <React.StrictMode>
             <footer className='text-center pt-5 pb-5 border-t'>
                 <dl className='flex justify-center text-sm text-gray-500'>
                     <dt className="blind">관련 사이트 링크</dt>
@@ -11,6 +12,7 @@ export default class Footer extends React.Component  {
                 </dl>
                 <p className="copy mt-3 text-sm">Copyright © 2024 최성훈 BLKLIME<br />tailwindcss / react / nodejs / GitHub / Nginx / AWS</p>
             </footer>
+            </React.StrictMode>
         );
     }
 }

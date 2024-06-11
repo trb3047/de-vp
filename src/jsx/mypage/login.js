@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//보안 강화한 local storage
-import secureLocalStorage from 'react-secure-storage';
 import Header from '../header.js';
 import Footer from '../footer.js';
 
@@ -9,36 +7,35 @@ export default function PageLogin() {
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
     const navigate = useNavigate();
-    const secureStorage = secureLocalStorage.default;
 
     const loginSubmit = async () => {
-        if(!id) return alert('ID를 입력해 주세요');
-        if(!pw) return alert('비밀번호를 입력해 주세요');
-
-        try {
-            const res = await fetch('/api/loginCheck', {
-                method: 'POST',
-                body: JSON.stringify({userID: id, userPW: pw}),
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            const data = await res.json();
-            //로그인 성공
-            if (res.status === 200) {
-                //암호화하고 데이터 저장
-                secureStorage.setItem('nick', data.userNick);
-                secureStorage.setItem('email', data.userEmail);
-                secureStorage.setItem('level', data.level);
-                navigate('/');
+        if (id === '' || pw === '') {
+            alert('아이디 또는 비밀번호를 입력해주시기 바랍니다');
+            return;
+        } else {
+            try {
+                const res = await fetch('/api/loginCheck', {
+                    method: 'POST',
+                    body: JSON.stringify({userID: id, userPW: pw}),
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+                const data = await res.json();
+                //로그인 성공 메세지 정도만 구현되어 있음
+                alert(data);
+                if (res.status === 200) {
+                    navigate('/');
+                } else {
+                    setId('');
+                    setPw('');
+                    return;
+                }
+            } catch(err) {
+                console.log(err);
             }
-
-        } catch(err) {
-            console.log(err);
         }
-        
     }
 
     return (    
