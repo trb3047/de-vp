@@ -12,13 +12,13 @@ export default function PageLogin() {
     const secureStorage = secureLocalStorage.default;
 
     const loginSubmit = async () => {
-        if(!id) return alert('ID를 입력해 주세요');
-        if(!pw) return alert('비밀번호를 입력해 주세요');
-
         try {
+            if (!id) return alert('ID를 입력해 주세요');
+            if (!pw) return alert('비밀번호를 입력해 주세요');
+
             const res = await fetch('/api/loginCheck', {
                 method: 'POST',
-                body: JSON.stringify({userID: id, userPW: pw}),
+                body: JSON.stringify({ userID: id, userPW: pw }),
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
@@ -26,6 +26,8 @@ export default function PageLogin() {
             });
 
             const data = await res.json();
+            //로그인 실패
+            if (res.status === 401) return alert(data);
             //로그인 성공
             if (res.status === 200) {
                 //암호화하고 데이터 저장
@@ -36,7 +38,7 @@ export default function PageLogin() {
             }
 
         } catch(err) {
-            console.log(err);
+            //console.log(err);
         }
         
     }

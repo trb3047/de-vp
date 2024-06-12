@@ -1,6 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcrypt';
-import { userDB, getUser, signUp, getId, getNick } from '../database/userDB.js';
+import { getUser, signUp, getId, getNick } from '../database/userDB.js';
 
 //텍스트 값을 hash로 변환
 const textToHash = async (text) => {
@@ -57,7 +56,7 @@ const loginCheck = async (req, res) => {
         const { userNick: nick, userEmail: email, level: lev } = userCheck[0];
         res.status(200).json({ userNick: nick, userEmail: email, level: lev });
     } catch (err) {
-        console.error(err);
+        //console.log(err);
         res.status(500).json(err);
     }
 }
