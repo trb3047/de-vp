@@ -1,0 +1,99 @@
+.codeBox {
+    @apply overflow-hidden;
+}
+.codeBox textarea {
+    @apply w-full p-2 min-h-96 bg-gray-200;
+}
+.codeBox .code {
+    @apply relative block overflow-x-scroll w-auto min-h-40 bg-zinc-800 text-white cursor-text text-nowrap;
+}
+.codeBox .code > p {
+    @apply absolute top-0 left-0;
+}
+.codeBox .code > code {
+    @apply indent-12;
+}
+.codeBox .code > code > p::after {
+    content: '';
+    @apply inline-block;
+}
+.codeBox .code .num {
+    @apply relative text-gray-500 block w-10 text-right pr-2;
+}
+.codeBox .code .num::after {
+    content: '';
+    @apply block absolute top-0 right-0 bottom-0 w-px bg-gray-500;
+}
+.codeBox .code b {
+    @apply font-normal;
+}
+i {
+    @apply not-italic;
+}
+
+/* 코드 리스트 */
+.codeList {
+    @apply overflow-hidden sm:-ml-3 pl-2 pr-2 sm:pl-0 sm:pr-0;
+}
+.codeList > li {
+    @apply float-left w-full sm:w-2/4;
+}
+.codeList .noResult {
+    @apply pt-10 pb-10 float-none w-auto text-center sm:ml-3;
+}
+.codeList > li:nth-child(2) {
+    @apply sm:mt-0;
+}
+.codeList > li + li {
+    @apply mt-3;
+}
+.codeList a {
+    transition: 0.3s;
+    @apply block p-2 bg-gray-100 sm:ml-3;
+}
+.codeList .code {
+    @apply overflow-hidden cursor-pointer h-24 min-h-0;
+}
+.codeList a:hover {
+    @apply bg-gray-300;
+}
+.codeList h4 {
+    @apply text-xl font-bold pb-1 border-b border-gray-400 border-dashed;
+}
+.codeList .date {
+    @apply text-sm text-gray-400 p-1 pl-2 pr-2;
+}
+.codeList .desc {
+    @apply m-2 mt-0 line-clamp-2 text-ellipsis text-gray-800;
+}
+
+/* 메인 하단 무한 롤링 이미지 */
+#scrollNextPage {
+    @apply animate-pulse p-2 bg-white;
+}
+#scrollNextPage::before {
+    content: '';
+    @apply block h-10 bg-gray-300;
+}
+#scrollNextPage::after {
+    content: '';
+    @apply block h-5 mt-3 bg-gray-200;
+}
+
+/* 코드 색깔 */
+/* javascript */
+.codeBox .code.JS {
+    @apply  bg-zinc-800 text-sky-300;
+}
+.codeBox .code.JS i {
+    @apply text-sky-600 not-italic;
+}
+.codeBox .code.JS b {
+    @apply text-violet-500;
+}
+.codeBox .code.JS .anno {
+    @apply text-green-600;
+}
+.codeBox .code .annoDefault {
+    @apply text-sky-400;
+}

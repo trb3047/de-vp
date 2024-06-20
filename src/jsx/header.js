@@ -22,24 +22,48 @@ sub menu
 */
 export default function Header() {
     const secureStorage = secureLocalStorage.default;
-    const userLevel = secureStorage.getItem('level');
+    const userNick = secureStorage.getItem('nick');
+    const nowPage = window.location.pathname;
+    let { on1, on2, on3, on4 } = '';
+    const eventName = 'on';
+    //각 페이지 메뉴 on이벤트
+    switch (nowPage) {
+        case '/' :
+        case '/code' :
+            on1 = eventName;
+            break;
+        case '/senior' :
+            on2 = eventName;
+            break;
+        case '/junior' :
+            on3 = eventName;
+            break;
+        default:
+    }
+    if (nowPage.match('mypage')) on4 = eventName;
+    //console.log(nowPage);
+    //console.log(secureStorage);
 
     return (
         <header className='pt-10 shadow-md relative'>
             <div className='text-center'>
-                <h1 className='text-3xl font-bold'><a href='./'>DE-VP</a></h1>
+                <h1 className='text-3xl font-bold'><a href='/'>DE-VP</a></h1>
                 <p className='text-sm mt-2'>deep information for developer</p>
             </div>
             <nav className='mt-8 border-t'>
                 <dl className='gnb flex justify-center'>
                     <dt className='blind'>메인 메뉴</dt>
-                    <dd><a href='#'>인증 Code</a></dd>
-                    <dd><a href='#'>Code</a></dd>
+                    <dd><a href='/' className={on1}>total</a></dd>
+                    <dd><a href='/senior' className={on2}>senior</a></dd>
+                    <dd><a href='/junior' className={on3}>junior</a></dd>
+                    {(() => {
+                        if(userNick) return <dd><a href='/mypage' className={on4}>mypage</a></dd>;
+                    })()}
                 </dl>
                 <dl className='snb absolute top-1 right-2 flex justify-end'>
                     <dt className='blind'>서브 메뉴</dt>
                     {(() => {
-                        if(userLevel) return <dd><a href='/logout'>로그아웃</a></dd>;
+                        if(userNick) return <dd><a href='/logout'>로그아웃</a></dd>;
                         else {
                             return (
                                 <React.StrictMode>

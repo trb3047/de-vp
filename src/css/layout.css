@@ -5,7 +5,7 @@
     @apply max-w-full;
 }
 .container > main {
-    @apply max-w-screen-xl ml-auto mr-auto pt-5 pb-5;
+    @apply max-w-screen-lg ml-auto mr-auto pt-5 pb-5;
 }
 
 /* 메뉴 */
@@ -15,7 +15,7 @@
 .gnb a {
     @apply block p-2 relative;
 }
-.gnb a:hover::after {
+.gnb a:hover::after, .gnb a.on::after {
     content:'';
     @apply block absolute bottom-0 left-0 w-full h-1 bg-blue-200;
 }
@@ -33,18 +33,43 @@
 .category {
     @apply relative;
 }
-.category label {
+.category label, .category a, .category button {
     @apply inline-block p-1 text-sm border rounded-md cursor-pointer;
 }
-.category label ~ label {
+.category label ~ label, .category a ~ a, .category button ~ button {
     @apply ml-2;
 }
 .category input {
     @apply absolute -top-10 -right-10 opacity-0 w-0 h-0;
 }
-.category input:checked + label, .category label:hover {
+.category input:checked + label, .category label:hover, .category a:hover, .category a.on, .category button:hover, .category button.on {
     @apply bg-blue-400 border-blue-400 text-white;
 }
 .category.sort input:checked + label, .category.sort label:hover {
     @apply bg-gray-400 border-gray-400;
+}
+
+/* 아이콘 */
+i.JS {
+    @apply bg-violet-500 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
+}
+i.git {
+    @apply bg-zinc-800 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
+}
+i.linux {
+    @apply bg-gray-500 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
+}
+i.mysql {
+    @apply bg-sky-700 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
+}
+i.FE {
+    @apply bg-yellow-500 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
+}
+i.BE {
+    @apply bg-indigo-700 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
+}
+
+/* highlight */
+i.highlight {
+    @apply text-blue-500 font-bold;
 }

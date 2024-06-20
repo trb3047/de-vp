@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
-import { getUser, signUp, getId, getNick } from '../database/userDB.js';
+import { getUser, signUp, getId, getNick, getUserInEmail, getEditPW } from '../database/userDB.js';
 
 //텍스트 값을 hash로 변환
-const textToHash = async (text) => {
+async function textToHash(text) {
     const saltRounds = 10;
     try {
         const hash = await bcrypt.hash(text, saltRounds);
@@ -14,7 +14,7 @@ const textToHash = async (text) => {
 }
 
 //해쉬값을 풀어서 확인
-const hashCompare = async (inputValue, hash) => {
+async function hashCompare(inputValue, hash) {
     try {
         const isMatch = await bcrypt.compare(inputValue, hash);
         if (isMatch) return true;
@@ -26,7 +26,7 @@ const hashCompare = async (inputValue, hash) => {
 }
 
 //회원가입 처리
-const signup = async (req, res) => {
+export async function signup(req, res) {
     //클라이언트에서 보낸 정보 분해
     const { userID, userPW, userNick, userEmail, level } = req.body;
     try {
@@ -42,7 +42,7 @@ const signup = async (req, res) => {
     }
 };
 
-const loginCheck = async (req, res) => {
+export async function loginCheck(req, res) {
     const { userID, userPW } = req.body;
 
     try {
@@ -53,15 +53,15 @@ const loginCheck = async (req, res) => {
         const isMatch = await hashCompare(userPW, blobToStr);
         if (!isMatch) return res.status(401).json('비밀번호가 일치하지 않습니다.');
 
-        const { userNick: nick, userEmail: email, level: lev } = userCheck[0];
-        res.status(200).json({ userNick: nick, userEmail: email, level: lev });
+        const { userID: id, userNick: nick, userEmail: email, level: lev } = userCheck[0];
+        res.status(200).json({ userID: id, userNick: nick, userEmail: email, level: lev });
     } catch (err) {
         //console.log(err);
         res.status(500).json(err);
     }
 }
 
-const idCheck = async (req, res) => {
+export async function idCheck(req, res) {
     const { userID } = req.body;
     try {
         const userCheck = await getId(userID);
@@ -77,7 +77,7 @@ const idCheck = async (req, res) => {
     }
 }
 
-const nickCheck = async (req, res) => {
+export async function nickCheck(req, res) {
     const { userNick } = req.body;
     try {
         const userCheck = await getNick(userNick);
@@ -93,6 +93,49 @@ const nickCheck = async (req, res) => {
     }
 }
 
+export async function findID(req, res) {
+    const { userEmail, userPW } = req.body;
+    try {
+        const userCheck = await getUserInEmail(userEmail);
+        if (!userCheck.length) return res.status(401).json('등록되지 않은 email 주소입니다.');
+
+        const blobToStr = Buffer.from(userCheck[0].userPW).toString();
+        const isMatch = await hashCompare(userPW, blobToStr);
+        if (!isMatch) return res.status(401).json('비밀번호가 일치하지 않습니다.');
+
+        const { userID: id } = userCheck[0];
+        res.status(200).json({ userID: id });
+    }   catch (err) {
+            console.error(err);
+            res.status(500).json(err);
+    }  
+}
+
+export async function findPW(req, res) {
+    const { userID, userEmail } = req.body;
+    try {
+        const userCheck = await getUser(userID);        
+        if (!userCheck.length) return res.status(401).json('존재하지 않는 아이디입니다.');
+        if (userEmail !== userCheck[0].userEmail) return res.status(401).json('이메일 주소가 일치하지 않습니다.');
+
+        res.status(200).json({ userID: userID });
+    }   catch (err) {
+            console.error(err);
+            res.status(500).json(err);
+    }  
+}
+
+export async function editPW(req, res) {
+    const { userID, userPW } = req.body;
+    try {
+        const resHash = await textToHash(userPW);
+        const retEdit = await getEditPW([userID, resHash]);
+        
+        res.status(200).json('비밀번호 변경 완료');
+    }   catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }  
+}
 
 export default signup;
-export { signup, loginCheck, idCheck, nickCheck };

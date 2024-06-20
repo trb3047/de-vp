@@ -92,12 +92,12 @@ export default function PageJoin() {
         const emailReg = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
         //회원가입 정보 체크 
-        if(!okId) return alert('ID 중복 확인을 해 주세요');
-        if(!okNick) return alert('닉네임 중복 확인을 해 주세요');
-        if(!pwReg.test(pw)) return alert('8~16자리의 영문, 숫자, 특수문자를 조합해야 합니다');
-        if(pw !== pw2) return alert('비밀번호가 일치하지 않습니다');
-        if(!email) return alert('이메일 주소를 입력해 주세요');
-        if(!emailReg.test(email)) return alert('이메일 형식을 맞춰서 입력해 주세요');
+        if (!okId) return alert('ID 중복 확인을 해 주세요');
+        if (!okNick) return alert('닉네임 중복 확인을 해 주세요');
+        if (!pwReg.test(pw)) return alert('8~16자리의 영문, 숫자, 특수문자를 조합해야 합니다');
+        if (pw !== pw2) return alert('비밀번호가 일치하지 않습니다');
+        if (!email) return alert('이메일 주소를 입력해 주세요');
+        if (!emailReg.test(email)) return alert('이메일 형식을 맞춰서 입력해 주세요');
 
         try {
             //회원가입 정보를 해당 경로로 보내기
@@ -112,9 +112,9 @@ export default function PageJoin() {
             const data = await res.json();
 
             //가입 성공, 메인페이지로 리다이렉트
-            if (data.status === 200) {
+            if (res.status === 200) {
                 alert(data);
-                navigate('/');
+                navigate('/login');
             }
         } 
         //에러 처리, 이 경우에는 브라우저 콘솔에 나온다
@@ -157,9 +157,9 @@ export default function PageJoin() {
         
                         </li>
                     </ul>
-                    <div className="btnGroup">
+                    <div className="btnGroup mt-5">
                         <a href="/" className="btn">취소</a>
-                        <button className="btn join" onClick={submit}>회원가입</button>
+                        <button className='btn join' onClick={submit}>회원가입</button>
                     </div>
                 </div>
             </main>
