@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //보안 강화한 local storage
 import secureLocalStorage from 'react-secure-storage';
-import CodeEditor from '../../js/editor.js';
+//import codeEditor from '../../js/editor.js';
 import Header from '../header.js';
 import Footer from '../footer.js';
 
@@ -11,11 +11,13 @@ export default function PageMyCode() {
     const navigate = useNavigate();
     const userID = secureStorage.getItem('id');
     const userNick = secureStorage.getItem('nick');
-    const userLevel = secureStorage.getItem('level');
-
-    //유저가 아닐 경우 접근 막기
+    //const userLevel = secureStorage.getItem('level');
+    
     useEffect(() => {
+
+        //유저가 아닐 경우 접근 막기
         if(!userNick || userNick === null) navigate('/');
+
         async function getCode() {
             const box = document.getElementById('codeList');
             const data = await getCodeList();
@@ -37,22 +39,24 @@ export default function PageMyCode() {
                 box.innerHTML = code;
             }
         }
+        
+        async function getCodeList() {
+            
+            const res = await fetch('/api/getCode', {
+                method: 'POST',
+                body: JSON.stringify({ userID: userID }),
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            let data = await res.json();
+            
+            return data;
+        }
+
         getCode();
     }, [])
 
-    async function getCodeList() {
-        
-        const res = await fetch('/api/getCode', {
-            method: 'POST',
-            body: JSON.stringify({ userID: userID }),
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' }
-        });
-
-        let data = await res.json();
-        
-        return data;
-    }
 
 
     return (    
@@ -69,7 +73,7 @@ export default function PageMyCode() {
                     <h2 className="text-xl text-center">{userNick}의 code</h2>
                     <ul id='codeList' className="codeList mt-3"></ul>
                     <div className='btnGroup text-center mt-3'>
-                        <a href='/mypage/myCodeEdit' className='btn apply'>code 작성</a>
+                        <a href='/mypage/myCodeAdd' className='btn apply'>code 작성</a>
                     </div>
                 </div>
             </main>

@@ -180,9 +180,9 @@ export default function PageMyCodeAdd() {
                         </div>
                     </article>
                     <div className='btnGroup text-right w-full mt-5'>
-                    <button className='btn delete' onClick={deleteCode}>code 삭제</button>
+                    <button className='btn delete' onClick={deleteCode}>삭제</button>
                         <a href={'/code?idx=' + idx} className='btn'>취소</a>
-                        <button className='btn apply' onClick={submit}>code 수정</button>
+                        <button className='btn apply' onClick={submit}>수정</button>
                     </div>
                 </div>
             </main>

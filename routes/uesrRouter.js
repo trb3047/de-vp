@@ -1,36 +1,47 @@
 import express from 'express';
 import { signup, loginCheck, idCheck, nickCheck, findID, findPW, editPW } from '../controllers/user.js';
-import { codeApply, codeEdit, codeDelete, getCodeList, getCodeV, getCodeSearch } from '../controllers/code.js'
+import { codeApply, codeEdit, codeDelete, getCodeList, getCodeV, getCodeSearch } from '../controllers/code.js';
+import { getCommentList, commentApply, commentEdit, commentDelete } from '../controllers/comment.js';
 
 //라우터 - 해당 경로로 접근시 연결한다
-const router = express.Router();
+const userRouter = express.Router();
 
 //회원가입
-router.post('/signup', signup);	
+userRouter.post('/signup', signup);	
 //로그인
-router.post('/loginCheck', loginCheck);
+userRouter.post('/loginCheck', loginCheck);
 //id체크
-router.post('/idCheck', idCheck);
+userRouter.post('/idCheck', idCheck);
 //닉네임 체크
-router.post('/nickCheck', nickCheck);
+userRouter.post('/nickCheck', nickCheck);
 //id찾기
-router.post('/findID', findID);
+userRouter.post('/findID', findID);
 //비밀번호 찾기
-router.post('/findPW', findPW);
+userRouter.post('/findPW', findPW);
 //비밀번호 변경
-router.post('/editPW', editPW);
+userRouter.post('/editPW', editPW);
+
 
 //코드 작성
-router.post('/codeApply', codeApply);
+userRouter.post('/codeApply', codeApply);
 //코드 수정
-router.post('/codeEdit', codeEdit);
+userRouter.post('/codeEdit', codeEdit);
 //코드 / 삭제
-router.post('/codeDelete', codeDelete);
+userRouter.post('/codeDelete', codeDelete);
 //코드 가져오기 
-router.post('/getCode', getCodeList);
+userRouter.post('/getCode', getCodeList);
 //코드 가져오기 / my 상세
-router.post('/getCodeView', getCodeV);
+userRouter.post('/getCodeView', getCodeV);
 //코드 / 검색
-router.post('/getCodeSearch', getCodeSearch);
+userRouter.post('/getCodeSearch', getCodeSearch);
 
-export default router;
+//댓글 작성
+userRouter.post('/commentApply', commentApply);
+//댓글 작성
+userRouter.post('/commentEdit', commentEdit);
+//댓글 작성
+userRouter.post('/commentDelete', commentDelete);
+//댓글 가져오기 
+userRouter.post('/getComment', getCommentList);
+
+export default userRouter;

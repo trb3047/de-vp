@@ -1,0 +1,36 @@
+.comment {
+    @apply border-t border-zinc-500 mt-5;
+}
+.comment > * {
+    @apply p-2 pt-5 pb-5;
+}
+.comment .write {
+    @apply relative pr-20;
+}
+.comment .write input[type="text"] {
+    @apply w-full ml-1;
+}
+.comment .write input[type="submit"] {
+    @apply absolute top-0 right-1 w-16 h-full;
+}
+.comment + .comment {
+    @apply mt-0 border-none;
+}
+.comment + .comment > *, .comment.inner > * {
+    @apply p-3 pt-3 pb-3;
+}
+.comment .nick {
+    @apply text-sm text-gray-500;
+}
+.comment .btnGroup {
+    @apply text-right;
+}
+.comment .btnGroup .btn {
+    @apply text-sm p-1;
+}
+.comment > li + li {
+    @apply border-t border-gray-300
+}
+.comment .inner {
+    @apply border-none bg-gray-100 mt-2;
+}

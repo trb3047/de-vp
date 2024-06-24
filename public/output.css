@@ -1258,6 +1258,16 @@ i {
   font-weight: 700;
 }
 
+@media (min-width: 640px) {
+  .codeList h4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+  }
+}
+
 .codeList .date {
   padding: 0.25rem;
   padding-left: 0.5rem;
@@ -1271,13 +1281,18 @@ i {
 .codeList .desc {
   margin: 0.5rem;
   margin-top: 0px;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  text-overflow: ellipsis;
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
+@media (min-width: 640px) {
+  .codeList .desc {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+  }
 }
 
 /* 메인 하단 무한 롤링 이미지 */
@@ -1342,6 +1357,78 @@ i {
 .codeBox .code .annoDefault {
   --tw-text-opacity: 1;
   color: rgb(56 189 248 / var(--tw-text-opacity));
+}
+
+.comment {
+  margin-top: 1.25rem;
+  border-top-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(113 113 122 / var(--tw-border-opacity));
+}
+
+.comment > * {
+  padding: 0.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.comment .write {
+  position: relative;
+  padding-right: 5rem;
+}
+
+.comment .write input[type="text"] {
+  margin-left: 0.25rem;
+  width: 100%;
+}
+
+.comment .write input[type="submit"] {
+  position: absolute;
+  top: 0px;
+  right: 0.25rem;
+  height: 100%;
+  width: 4rem;
+}
+
+.comment + .comment {
+  margin-top: 0px;
+  border-style: none;
+}
+
+.comment + .comment > *, .comment.inner > * {
+  padding: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.comment .nick {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.comment .btnGroup {
+  text-align: right;
+}
+
+.comment .btnGroup .btn {
+  padding: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.comment > li + li {
+  border-top-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.comment .inner {
+  margin-top: 0.5rem;
+  border-style: none;
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 .hover\:underline:hover {

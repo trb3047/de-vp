@@ -39,6 +39,8 @@ export default function App() {
         <Route path='/mypage/myCodeAdd' element={<PageMyCodeAdd />}></Route>
         <Route path='/mypage/myCodeEdit' element={<PageMyCodeEdit />}></Route>
         <Route path='/code' element={<PageCodeView />}></Route>
+        <Route path='/senior/code' element={<PageCodeView />}></Route>
+        <Route path='/junior/code' element={<PageCodeView />}></Route>
         <Route path='/contact' element={<PageContact />}></Route>
       </Routes>
     </Router>

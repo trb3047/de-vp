@@ -1,3 +1,14 @@
+/*
+ * html, javascript 코드를 브라우저에서 확인할 수 있도록 변환시키는 에디터 
+ * 
+ * 버전 1.0.0
+ * 2024-06-18
+ * 
+ * 작성자
+ * 최성훈 | blklime
+ * 
+ */
+
 export default function editor(val) {
     try {
         if (!val) return '';

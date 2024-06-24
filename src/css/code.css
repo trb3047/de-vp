@@ -58,13 +58,13 @@ i {
     @apply bg-gray-300;
 }
 .codeList h4 {
-    @apply text-xl font-bold pb-1 border-b border-gray-400 border-dashed;
+    @apply text-xl font-bold pb-1 border-b border-gray-400 border-dashed sm:line-clamp-1 sm:text-ellipsis;
 }
 .codeList .date {
     @apply text-sm text-gray-400 p-1 pl-2 pr-2;
 }
 .codeList .desc {
-    @apply m-2 mt-0 line-clamp-2 text-ellipsis text-gray-800;
+    @apply m-2 mt-0 sm:line-clamp-2 sm:text-ellipsis text-gray-800;
 }
 
 /* 메인 하단 무한 롤링 이미지 */

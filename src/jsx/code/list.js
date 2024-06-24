@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import CodeEditor from '../../js/editor.js';
 import Header from '../header.js';
 import Footer from '../footer.js';
 
 export default function CodeList() {
-    const pageLev = window.location.pathname;
+    let pageLev = window.location.pathname;
     const [sort, setSort] = useState('DESC');
     const [tag, setTag] = useState('*');
     const [search, setSearch] = useState('');
@@ -22,6 +21,7 @@ export default function CodeList() {
             break;
         default :
             lev = 0;
+            pageLev = '';
     }
 
     useEffect(() => {
@@ -58,9 +58,9 @@ export default function CodeList() {
                     title = title.replace(search, '<i class="highlight">' + search + '</i>');
                     desc = title.replace(search, '<i class="highlight">' + search + '</i>');
                 }
-                result += '<li><a href="/code?idx=' + idx + '">'
+                result += '<li><a href="' + pageLev + '/code?idx=' + idx + '">'
                     + '<h4><i class="'+ tag +'">' + tag + '</i> ' + title + '</h4>'
-                    + '<p class="date">' + userNick + ' | ' + date + '</p>'
+                    + '<p class="date">' + date + ' | ' + userNick + '</p>'
                     + '<p class="desc">' + desc + '</p>'
                     + '<div class="codeBox"><div class="code ' + editor + '">' + CodeEditor(context)  + '</div></div>'
                     + '</a></li>';
@@ -72,13 +72,15 @@ export default function CodeList() {
             scrollTimer = 0;
             codeTimer = 0;
         } catch (err) {
-            console.log(err);
+            //console.log(err);
         }
     }
 
     const submit = async function () {
         //tag  sort
         try {
+            if (search.length === 1) return alert('2글자 이상만 검색 가능합니다');
+
             codeTimer = 1;
 
             let codeBox = document.getElementById('code');
@@ -93,7 +95,7 @@ export default function CodeList() {
             let data = await res.json();
             //console.log(data);
             if (res.status === 200) return data;
-            if (res.status === 401 && search.length > 1) codeBox.innerHTML = '<li class="noResult">' + data + '</li>';
+            if (res.status === 401 && ( search.length > 1 || tag !== '*')) codeBox.innerHTML = '<li class="noResult">' + data + '</li>';
         } catch (err) {
             console.log(err);
         }

@@ -33,9 +33,11 @@ export default function Header() {
             on1 = eventName;
             break;
         case '/senior' :
+        case '/senior/code' :
             on2 = eventName;
             break;
         case '/junior' :
+        case '/junior/code' :
             on3 = eventName;
             break;
         default:
