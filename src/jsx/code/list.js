@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import secureLocalStorage from 'react-secure-storage';
 import CodeEditor from '../../js/editor.js';
 import Header from '../header.js';
 import Footer from '../footer.js';
 
 export default function CodeList() {
     let pageLev = window.location.pathname;
+    const secureStorage = secureLocalStorage.default;
+    const userID = secureStorage.getItem('id');
     const [sort, setSort] = useState('DESC');
     const [tag, setTag] = useState('*');
     const [search, setSearch] = useState('');
@@ -38,6 +41,7 @@ export default function CodeList() {
                 }
             }
         }
+
     }, [])
 
     const getCodeList = async function () {
@@ -45,7 +49,7 @@ export default function CodeList() {
         if (codeTimer === 1) return;
         try {
             let codeBox = document.getElementById('code');
-            const data = await submit(page);
+            const data = await submit();
             let result = '';
 
             //다음 데이터 없으면 멈춤
@@ -58,12 +62,14 @@ export default function CodeList() {
                     title = title.replace(search, '<i class="highlight">' + search + '</i>');
                     desc = title.replace(search, '<i class="highlight">' + search + '</i>');
                 }
+
                 result += '<li><a href="' + pageLev + '/code?idx=' + idx + '">'
                     + '<h4><i class="'+ tag +'">' + tag + '</i> ' + title + '</h4>'
                     + '<p class="date">' + date + ' | ' + userNick + '</p>'
                     + '<p class="desc">' + desc + '</p>'
                     + '<div class="codeBox"><div class="code ' + editor + '">' + CodeEditor(context)  + '</div></div>'
-                    + '</a></li>';
+                    + '</a>'
+                    + '</li>';
             }
             
             if (page === 0) codeBox.innerHTML = result;
@@ -114,7 +120,7 @@ export default function CodeList() {
                         <input type='radio' name='sort' id='sort_pop' value='pop' onChange={() => {setSort('pop')}} />
                         <label htmlFor='sort_pop'>인기</label>
                     </div>
-                    <div className='category mt-3 sm:mt-0 sm:float-right'>
+                    <div className='category sm:float-right'>
                         <p className='blind'>대분류 선택</p>
                         <input type='radio' name='tag' id='tag_All' defaultChecked  value='*' onChange={() => {setTag('*');}} />
                         <label htmlFor='tag_All'>전체</label>
@@ -131,7 +137,7 @@ export default function CodeList() {
                         <input type='radio' name='tag' id='tag_BE' vlaue='BE' onChange={() => {setTag('BE');}} />
                         <label htmlFor='tag_BE' className='BE'>backend</label>
                     </div>
-                    <div className='searchBox float-right w-full mt-5 mb-5'>
+                    <div className='searchBox float-right w-full mt-0 mb-5 sm:mt-5'>
                         <p className='blind'>검색 하기</p>
                         <div className='relative pr-14'>
                             <input className='input' type='text' placeholder='검색어 입력' value={search} onChange={(e) => setSearch(e.target.value)} />

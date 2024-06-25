@@ -37,7 +37,7 @@
     @apply inline-block p-1 text-sm border rounded-md cursor-pointer;
 }
 .category label ~ label, .category a ~ a, .category button ~ button {
-    @apply ml-2;
+    @apply ml-2 mb-2 sm:mb-0;
 }
 .category input {
     @apply absolute -top-10 -right-10 opacity-0 w-0 h-0;

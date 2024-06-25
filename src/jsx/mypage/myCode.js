@@ -33,7 +33,7 @@ export default function PageMyCode() {
                 
             }
             if (code === '') {
-                box.innerHTML = '<li class="pt-10 pb-10 text-center">아직 작성한 code가 없습니다</li>';
+                box.innerHTML = '<li class="noResult">아직 작성한 code가 없습니다</li>';
     
             } else {
                 box.innerHTML = code;

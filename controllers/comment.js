@@ -37,9 +37,9 @@ export async function commentEdit(req, res) {
 }
 
 export async function commentDelete(req, res) {
-    const { idx } = req.body;
+    const { idx, codeID, commentID } = req.body;
     try {
-        const codeData = await commentDeleteDB(idx);
+        const codeData = await commentDeleteDB({ idx: idx, codeID: codeID, commentID: commentID });
         res.status(200).json('댓글 삭제 완료');
     } catch (err) {
         console.error(err);

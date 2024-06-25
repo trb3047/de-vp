@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { getUser, signUp, getId, getNick, getUserInEmail, getEditPW } from '../database/userDB.js';
+import { getUser, signUp, getId, getNick, getUserInEmail, getEditPW, addFavorCodeDB, getFavorCodeDB, deleteFavorCodeDB } from '../database/userDB.js';
 
 //텍스트 값을 hash로 변환
 async function textToHash(text) {
@@ -132,6 +132,42 @@ export async function editPW(req, res) {
         const retEdit = await getEditPW([userID, resHash]);
         
         res.status(200).json('비밀번호 변경 완료');
+    }   catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }  
+}
+
+export async function addFavorCode(req, res) {
+    const { userID, favorCode } = req.body;
+    try {
+        const retEdit = await addFavorCodeDB({ userID: userID, favorCode: favorCode });
+        
+        res.status(200).json('즐겨찾기 추가 완료');
+    }   catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }  
+}
+
+export async function getFavorCode(req, res) {
+    const { userID } = req.body;
+    try {
+        const data = await getFavorCodeDB(userID);
+        
+        res.status(200).json(data[0].favorCode);
+    }   catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }  
+}
+
+export async function deleteFavorCode(req, res) {
+    const { userID, favorCode } = req.body;
+    try {
+        const data = await deleteFavorCodeDB({ userID: userID, favorCode: favorCode });
+        
+        res.status(200).json('즐겨찾기 제거 완료');
     }   catch (err) {
         console.error(err);
         res.status(500).json(err);

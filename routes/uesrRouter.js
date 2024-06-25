@@ -1,6 +1,6 @@
 import express from 'express';
-import { signup, loginCheck, idCheck, nickCheck, findID, findPW, editPW } from '../controllers/user.js';
-import { codeApply, codeEdit, codeDelete, getCodeList, getCodeV, getCodeSearch } from '../controllers/code.js';
+import { signup, loginCheck, idCheck, nickCheck, findID, findPW, editPW, addFavorCode, getFavorCode, deleteFavorCode } from '../controllers/user.js';
+import { codeApply, codeEdit, codeDelete, getCodeList, getCodeV, getCodeSearch, getCodeFavorite, upRecomand, downRecomand } from '../controllers/code.js';
 import { getCommentList, commentApply, commentEdit, commentDelete } from '../controllers/comment.js';
 
 //라우터 - 해당 경로로 접근시 연결한다
@@ -34,6 +34,8 @@ userRouter.post('/getCode', getCodeList);
 userRouter.post('/getCodeView', getCodeV);
 //코드 / 검색
 userRouter.post('/getCodeSearch', getCodeSearch);
+//코드 / 즐겨찾기
+userRouter.post('/getCodeFavorite', getCodeFavorite);
 
 //댓글 작성
 userRouter.post('/commentApply', commentApply);
@@ -43,5 +45,12 @@ userRouter.post('/commentEdit', commentEdit);
 userRouter.post('/commentDelete', commentDelete);
 //댓글 가져오기 
 userRouter.post('/getComment', getCommentList);
+
+//즐겨찾기 추가
+userRouter.post('/addFavorCode', addFavorCode);
+userRouter.post('/getFavorCode', getFavorCode);
+userRouter.post('/deleteFavorCode', deleteFavorCode);
+userRouter.post('/upRecomand', upRecomand);
+userRouter.post('/downRecomand', downRecomand);
 
 export default userRouter;

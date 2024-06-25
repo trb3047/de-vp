@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 //보안 강화한 local storage
 import secureLocalStorage from 'react-secure-storage';
 
 export default function Comment () {
-    const navigate = useNavigate();
     const secureStorage = secureLocalStorage.default;
     const userID = secureStorage.getItem('id');
     const userNick = secureStorage.getItem('nick');
     const idx = new URL(window.location.href).searchParams.get('idx');
     const [comment, setComment] = useState('');
-    const [commentID, setCommentID] = useState(0);
+    let commentID = 0;
 
     useEffect(() => {
         commentAll();
@@ -33,7 +31,7 @@ export default function Comment () {
             data.map((val) => {
                 if (val.commentID === 0) {
                     commentList += 
-                        `<li>`
+                        `<li data-depth='1'>`
                         +    `<p class='nick'>${val.date} | ${val.userNick}</p>`
                         +    `<p class='cont'>${val.context}</p>`
                         +    `<div class='btnGroup'>`
@@ -164,11 +162,15 @@ export default function Comment () {
             //댓글 삭제
             [...btnDel].map((val) => {
                 val.onclick = async function (e) {
+                    let target = e.target.parentElement.parentElement;
+                    let num = Array.prototype.indexOf.call(target.parentElement.children, target);
                     let commentIdx = e.target.getAttribute('data-idx');
+                    let sql = (Number(target.getAttribute('data-depth')) !== 1) ? { idx: commentIdx } : { idx: commentIdx, codeID: idx, commentID: num + 1 };
+    
                     try {
                         const res = await fetch('/api/commentDelete', {
                             method: 'POST',
-                            body: JSON.stringify({ idx: commentIdx }),
+                            body: JSON.stringify(sql),
                             credentials: 'include',
                             headers: { 'Content-Type': 'application/json' }
                         });

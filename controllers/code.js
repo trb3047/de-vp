@@ -1,4 +1,4 @@
-import { codeApplyDB, codeEditDB, codeDeleteDB, getCode, getCodeView, getCodeSearching } from '../database/userDB.js';
+import { codeApplyDB, codeEditDB, codeDeleteDB, getCode, getCodeView, getCodeSearching, getCodeFavoriteDB, upRecomandDB, downRecomandDB } from '../database/userDB.js';
 
 //code 저장
 export async function codeApply(req, res) {
@@ -58,11 +58,11 @@ export async function getCodeV(req, res) {
     }
 }
 
-export async function getCodeMain(req, res) {
-    const { page } = req.body;
+export async function getCodeFavorite(req, res) {
+    const { userID } = req.body;
     try {
-        const codeData = await getCodeMainList(page);
-        res.status(200).json(codeData);
+        const data = await getCodeFavoriteDB(userID);
+        res.status(200).json(data);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
@@ -81,6 +81,30 @@ export async function getCodeSearch(req, res) {
         console.error(err);
         res.status(500).json(err);
     }
+}
+
+export async function upRecomand(req, res) {
+    const { idx } = req.body;
+    try {
+        const retEdit = await upRecomandDB(idx);
+        
+        res.status(200).json();
+    }   catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }  
+}
+
+export async function downRecomand(req, res) {
+    const { idx } = req.body;
+    try {
+        const retEdit = await downRecomandDB(idx);
+        
+        res.status(200).json();
+    }   catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }  
 }
 
 export default codeApply;

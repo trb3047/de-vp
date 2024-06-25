@@ -643,6 +643,14 @@ video {
   margin-top: 2rem;
 }
 
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.mt-0 {
+  margin-top: 0px;
+}
+
 .block {
   display: block;
 }
@@ -879,6 +887,13 @@ video {
 
 .category label ~ label, .category a ~ a, .category button ~ button {
   margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .category label ~ label, .category a ~ a, .category button ~ button {
+    margin-bottom: 0px;
+  }
 }
 
 .category input {
@@ -1189,6 +1204,7 @@ i {
 }
 
 .codeList > li {
+  position: relative;
   float: left;
   width: 100%;
 }
@@ -1359,6 +1375,34 @@ i {
   color: rgb(56 189 248 / var(--tw-text-opacity));
 }
 
+/* 즐겨찾기 아이콘 */
+
+.codeList .addFavor {
+  position: absolute;
+  top: 0px;
+  right: 0.25rem;
+  z-index: 10;
+}
+
+.btnGroup .addFavor {
+  float: right;
+}
+
+.addFavor {
+  background: url('./icon_star.png') 0 0 no-repeat;
+  background-size: 100% auto;
+  display: block;
+  height: 2.5rem;
+  width: 2.5rem;
+  cursor: pointer;
+  overflow: hidden;
+  text-wrap: nowrap;
+}
+
+.addFavor:hover, .addFavor.on {
+  background-position-y: -40px;
+}
+
 .comment {
   margin-top: 1.25rem;
   border-top-width: 1px;
@@ -1446,6 +1490,18 @@ i {
 
   .sm\:mt-0 {
     margin-top: 0px;
+  }
+
+  .sm\:mb-5 {
+    margin-bottom: 1.25rem;
+  }
+
+  .sm\:mt-5 {
+    margin-top: 1.25rem;
+  }
+
+  .sm\:mt-3 {
+    margin-top: 0.75rem;
   }
 
   .sm\:border-l {
