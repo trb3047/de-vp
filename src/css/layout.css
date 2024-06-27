@@ -33,19 +33,19 @@
 .category {
     @apply relative;
 }
-.category label, .category a, .category button {
+.category > label, .category > a, .category > button {
     @apply inline-block p-1 text-sm border rounded-md cursor-pointer;
 }
-.category label ~ label, .category a ~ a, .category button ~ button {
+.category > label ~ label, .category > a ~ a, .category > button ~ button {
     @apply ml-2 mb-2 sm:mb-0;
 }
-.category input {
+.category > input {
     @apply absolute -top-10 -right-10 opacity-0 w-0 h-0;
 }
-.category input:checked + label, .category label:hover, .category a:hover, .category a.on, .category button:hover, .category button.on {
+.category > input:checked + label, .category > label:hover, .category > a:hover, .category > a.on, .category > button:hover, .category > button.on {
     @apply bg-blue-400 border-blue-400 text-white;
 }
-.category.sort input:checked + label, .category.sort label:hover {
+.category.sort > input:checked + label, .category.sort > label:hover {
     @apply bg-gray-400 border-gray-400;
 }
 

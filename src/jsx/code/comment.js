@@ -27,7 +27,6 @@ export default function Comment () {
         if(res.status === 200) {
             let commentBox = document.getElementById('commentList');
             let commentList = '';
-            let chkNum = 1;
             data.map((val) => {
                 if (val.commentID === 0) {
                     commentList += 
@@ -35,13 +34,13 @@ export default function Comment () {
                         +    `<p class='nick'>${val.date} | ${val.userNick}</p>`
                         +    `<p class='cont'>${val.context}</p>`
                         +    `<div class='btnGroup'>`
-                        +       `<button class='btn add'>댓글</button>`
-                        +       `${(userID === val.userID) ? '<button class="btn delete" data-idx="' + val.idx + '">삭제</button><button class="btn apply edit" data-idx=' + val.idx + '">수정</button>' : ''}`
+                        +       `<button class='btn add' data-idx='${val.idx}'>댓글</button>`
+                        +       `${(userID === val.userID) ? '<button class="btn delete" data-idx="' + val.idx + '">삭제</button><button class="btn apply edit" data-idx="' + val.idx + '">수정</button>' : ''}`
                         +    `</div>`
                         +    `<ol class='comment inner'>`;
                 
                     data.map((innerVal, innerIndex) => {
-                        if (innerVal.commentID === chkNum) {
+                        if (innerVal.commentID === val.idx) {
                             commentList +=
                                         `<li>`
                                         +    `<p class='nick'>${innerVal.date} | ${innerVal.userNick}</p>`
@@ -57,7 +56,6 @@ export default function Comment () {
                                 `</ol>`
                             + `</li>`;
 
-                    chkNum += 1;
                 }
             })
             commentBox.innerHTML = commentList;
@@ -70,11 +68,11 @@ export default function Comment () {
             [...btnAdd].map((val) => {
                 val.onclick = function (e) {
                     let target = e.target.parentElement.parentElement;
-                    let num = Array.prototype.indexOf.call(target.parentElement.children, target);
+                    let targetIdx = e.target.getAttribute('data-idx');
 
                     target.innerHTML = target.innerHTML
                                 +`<article class='comment add'>`
-                                +`<form action='javascript:;' data-target='${num + 1}'>`
+                                +`<form action='javascript:;' data-target='${targetIdx}'>`
                                 +    `<dl>`
                                 +        `<dt class='blind'>댓글 작성</dt>`
                                 +        `<dd class='write'>`
@@ -163,9 +161,8 @@ export default function Comment () {
             [...btnDel].map((val) => {
                 val.onclick = async function (e) {
                     let target = e.target.parentElement.parentElement;
-                    let num = Array.prototype.indexOf.call(target.parentElement.children, target);
                     let commentIdx = e.target.getAttribute('data-idx');
-                    let sql = (Number(target.getAttribute('data-depth')) !== 1) ? { idx: commentIdx } : { idx: commentIdx, codeID: idx, commentID: num + 1 };
+                    let sql = (Number(target.getAttribute('data-depth')) !== 1) ? { idx: commentIdx } : { idx: commentIdx, codeID: idx, commentID: commentIdx };
     
                     try {
                         const res = await fetch('/api/commentDelete', {

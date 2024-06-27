@@ -66,6 +66,96 @@ i {
 .codeList .desc {
     @apply m-2 mt-0 sm:line-clamp-2 sm:text-ellipsis text-gray-800;
 }
+/* cheat sheet */
+.cheatSheet {
+    @apply text-left mt-3;
+}
+.cheatSheet > li {
+    @apply w-full bg-gray-100;
+}
+.cheatSheet > li ~ li {
+    @apply mt-5;
+}
+.cheatSheet .code {
+    @apply h-auto cursor-auto;
+}
+.cheatSheet h4 {
+    @apply text-lg p-2 font-semibold;
+}
+.cheatSheet .desc {
+    @apply p-2 border-t border-dashed;
+}
+
+.navCode {
+    @apply text-sm sm:absolute sm:top-0 sm:-right-64 sm:w-60 text-left sm:border;
+}
+.navCode dt {
+    @apply p-2 text-center;
+}
+.navCode dd {
+    @apply border-t border-dashed;
+}
+.navCode .btnBox {
+    display: block !important;
+    @apply text-right sm:text-center p-2;
+}
+.navCode a {
+    @apply block overflow-hidden p-2 text-nowrap text-ellipsis;
+}
+.navCode a:hover {
+    @apply text-sky-400;
+}
+
+/* 마이페이지 favorite 페이징 */
+.category > input ~ .codeList > li,
+.category > a ~ .codeList > li,
+.category > input ~ .cheatSheet > li,
+.category > a ~ .cheatSheet > li,
+.category > input ~ .navCode > dd,
+.category > a ~ .navCode > dd {
+    display: none;
+}
+.category > #tag_All:checked ~ .codeList > li,
+.category > #tag_JS:checked ~ .codeList > li.JS,
+.category > #tag_git:checked ~ .codeList > li.git,
+.category > #tag_linux:checked ~ .codeList > li.linux,
+.category > #tag_mysql:checked ~ .codeList > li.mysql,
+.category > #tag_FE:checked ~ .codeList > li.FE,
+.category > #tag_BE:checked ~ .codeList > li.BE,
+.category > #tag_JS.on ~ .codeList > li.JS,
+.category > #tag_git.on ~ .codeList > li.git,
+.category > #tag_linux.on ~ .codeList > li.linux,
+.category > #tag_mysql.on ~ .codeList > li.mysql,
+.category > #tag_FE.on ~ .codeList > li.FE,
+.category > #tag_BE.on ~ .codeList > li.BE,
+.category > #tag_All:checked ~ .cheatSheet > li,
+.category > #tag_JS:checked ~ .cheatSheet > li.JS,
+.category > #tag_git:checked ~ .cheatSheet > li.git,
+.category > #tag_linux:checked ~ .cheatSheet > li.linux,
+.category > #tag_mysql:checked ~ .cheatSheet > li.mysql,
+.category > #tag_FE:checked ~ .cheatSheet > li.FE,
+.category > #tag_BE:checked ~ .cheatSheet > li.BE,
+.category > #tag_JS.on ~ .cheatSheet > li.JS,
+.category > #tag_git.on ~ .cheatSheet > li.git,
+.category > #tag_linux.on ~ .cheatSheet > li.linux,
+.category > #tag_mysql.on ~ .cheatSheet > li.mysql,
+.category > #tag_FE.on ~ .cheatSheet > li.FE,
+.category > #tag_BE.on ~ .cheatSheet > li.BE,
+.category > #tag_All:checked ~ .navCode > dd,
+.category > #tag_JS:checked ~ .navCode > dd.JS,
+.category > #tag_git:checked ~ .navCode > dd.git,
+.category > #tag_linux:checked ~ .navCode > dd.linux,
+.category > #tag_mysql:checked ~ .navCode > dd.mysql,
+.category > #tag_FE:checked ~ .navCode > dd.FE,
+.category > #tag_BE:checked ~ .navCode > dd.BE,
+.category > #tag_JS.on ~ .navCode > dd.JS,
+.category > #tag_git.on ~ .navCode > dd.git,
+.category > #tag_linux.on ~ .navCode > dd.linux,
+.category > #tag_mysql.on ~ .navCode > dd.mysql,
+.category > #tag_FE.on ~ .navCode > dd.FE,
+.category > #tag_BE.on ~ .navCode > dd.BE {
+    @apply block;
+}
 
 /* 메인 하단 무한 롤링 이미지 */
 #scrollNextPage {

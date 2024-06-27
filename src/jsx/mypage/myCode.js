@@ -24,7 +24,7 @@ export default function PageMyCode() {
             let code = '';
             for (let e in data) {
                 const { idx, title, desc, tag, date } = data[e];
-                code += '<li><a href="/mypage/myCodeEdit?idx=' + idx + '">'
+                code += '<li class="' + tag + '"><a href="/mypage/myCodeEdit?idx=' + idx + '">'
                         +    '<h4><i class="' + tag + '">' + tag + '</i> ' + title + "</h4>"
                         +    '<p class="date">' + date + '</p>'
                         +    '<p class="desc">' + desc + '</p>'
@@ -66,12 +66,30 @@ export default function PageMyCode() {
                 <div className='category text-center'>
                     <p className='blind'>카테고리 선택</p>
                     <a href='/mypage'>favorite</a>
-                    <a href='/mypage/cheatSheet'>cheat sheet</a>
+                    <a href='/mypage/cheatSheet?tag=JS'>cheat sheet</a>
                     <a href='/mypage/myCode' className='on'>my code</a>
                 </div>
                 <div id='cont' className='mt-5'>
                     <h2 className="text-xl text-center">{userNick}의 code</h2>
-                    <ul id='codeList' className="codeList mt-3"></ul>
+                    <div className='category text-right mt-3'>
+                        <p className='blind'>대분류 선택</p>
+                        <input type='radio' name='tag' id='tag_All' defaultChecked value='*' />
+                        <label htmlFor='tag_All'>전체</label>
+                        <input type='radio' name='tag' id='tag_JS' vlaue='JS' />
+                        <label htmlFor='tag_JS' className='JS'>javascript</label>
+                        <input type='radio' name='tag' id='tag_git' vlaue='git' />
+                        <label htmlFor='tag_git' className='git'>git</label>
+                        <input type='radio' name='tag' id='tag_linux' vlaue='linux' />
+                        <label htmlFor='tag_linux' className='linux'>linux</label>
+                        <input type='radio' name='tag' id='tag_mysql' value='mysql' />
+                        <label htmlFor='tag_mysql'>mysql</label>
+                        <input type='radio' name='tag' id='tag_FE' vlaue='FE' />
+                        <label htmlFor='tag_FE' className='FE'>frontend</label>
+                        <input type='radio' name='tag' id='tag_BE' vlaue='BE' />
+                        <label htmlFor='tag_BE' className='BE'>backend</label>
+                        <ul id='codeList' className="codeList mt-3 text-left"></ul>
+                    </div>
+                    <p id='scrollNextPage'><span className='blind'>다음 목록 불러오기</span></p>
                     <div className='btnGroup text-center mt-3'>
                         <a href='/mypage/myCodeAdd' className='btn apply'>code 작성</a>
                     </div>

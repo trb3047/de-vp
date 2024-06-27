@@ -56,7 +56,7 @@ export default function CodeList() {
             if (!data.length) return;
 
             for (let e in data) {
-                let { idx, title, desc, tag, context, date, userNick, editor } = data[e];
+                let { idx, title, desc, tag, context, date, userNick, editor, recomand } = data[e];
                 if(!editor) editor = 'JS';
                 if(search.length > 1) {
                     title = title.replace(search, '<i class="highlight">' + search + '</i>');
@@ -65,7 +65,7 @@ export default function CodeList() {
 
                 result += '<li><a href="' + pageLev + '/code?idx=' + idx + '">'
                     + '<h4><i class="'+ tag +'">' + tag + '</i> ' + title + '</h4>'
-                    + '<p class="date">' + date + ' | ' + userNick + '</p>'
+                    + '<p class="date">' + date + ' | ' + userNick + ' | 즐겨찾기: ' + recomand + '</p>'
                     + '<p class="desc">' + desc + '</p>'
                     + '<div class="codeBox"><div class="code ' + editor + '">' + CodeEditor(context)  + '</div></div>'
                     + '</a>'

@@ -627,6 +627,10 @@ video {
   margin-right: auto;
 }
 
+.mt-0 {
+  margin-top: 0px;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -641,14 +645,6 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mb-3 {
-  margin-bottom: 0.75rem;
-}
-
-.mt-0 {
-  margin-top: 0px;
 }
 
 .block {
@@ -875,7 +871,7 @@ video {
   position: relative;
 }
 
-.category label, .category a, .category button {
+.category > label, .category > a, .category > button {
   display: inline-block;
   cursor: pointer;
   border-radius: 0.375rem;
@@ -885,18 +881,18 @@ video {
   line-height: 1.25rem;
 }
 
-.category label ~ label, .category a ~ a, .category button ~ button {
+.category > label ~ label, .category > a ~ a, .category > button ~ button {
   margin-left: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
 @media (min-width: 640px) {
-  .category label ~ label, .category a ~ a, .category button ~ button {
+  .category > label ~ label, .category > a ~ a, .category > button ~ button {
     margin-bottom: 0px;
   }
 }
 
-.category input {
+.category > input {
   position: absolute;
   top: -2.5rem;
   right: -2.5rem;
@@ -905,7 +901,7 @@ video {
   opacity: 0;
 }
 
-.category input:checked + label, .category label:hover, .category a:hover, .category a.on, .category button:hover, .category button.on {
+.category > input:checked + label, .category > label:hover, .category > a:hover, .category > a.on, .category > button:hover, .category > button.on {
   --tw-border-opacity: 1;
   border-color: rgb(96 165 250 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
@@ -914,7 +910,7 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.category.sort input:checked + label, .category.sort label:hover {
+.category.sort > input:checked + label, .category.sort > label:hover {
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
@@ -1311,6 +1307,145 @@ i {
   }
 }
 
+/* cheat sheet */
+
+.cheatSheet {
+  margin-top: 0.75rem;
+  text-align: left;
+}
+
+.cheatSheet > li {
+  width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.cheatSheet > li ~ li {
+  margin-top: 1.25rem;
+}
+
+.cheatSheet .code {
+  height: auto;
+  cursor: auto;
+}
+
+.cheatSheet h4 {
+  padding: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+.cheatSheet .desc {
+  border-top-width: 1px;
+  border-style: dashed;
+  padding: 0.5rem;
+}
+
+.navCode {
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .navCode {
+    position: absolute;
+    top: 0px;
+    right: -16rem;
+    width: 15rem;
+    border-width: 1px;
+  }
+}
+
+.navCode dt {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.navCode dd {
+  border-top-width: 1px;
+  border-style: dashed;
+}
+
+.navCode .btnBox {
+  display: block !important;
+  padding: 0.5rem;
+  text-align: right;
+}
+
+@media (min-width: 640px) {
+  .navCode .btnBox {
+    text-align: center;
+  }
+}
+
+.navCode a {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  padding: 0.5rem;
+}
+
+.navCode a:hover {
+  --tw-text-opacity: 1;
+  color: rgb(56 189 248 / var(--tw-text-opacity));
+}
+
+/* 마이페이지 favorite 페이징 */
+
+.category > input ~ .codeList > li,
+.category > a ~ .codeList > li,
+.category > input ~ .cheatSheet > li,
+.category > a ~ .cheatSheet > li,
+.category > input ~ .navCode > dd,
+.category > a ~ .navCode > dd {
+  display: none;
+}
+
+.category > #tag_All:checked ~ .codeList > li,
+.category > #tag_JS:checked ~ .codeList > li.JS,
+.category > #tag_git:checked ~ .codeList > li.git,
+.category > #tag_linux:checked ~ .codeList > li.linux,
+.category > #tag_mysql:checked ~ .codeList > li.mysql,
+.category > #tag_FE:checked ~ .codeList > li.FE,
+.category > #tag_BE:checked ~ .codeList > li.BE,
+.category > #tag_JS.on ~ .codeList > li.JS,
+.category > #tag_git.on ~ .codeList > li.git,
+.category > #tag_linux.on ~ .codeList > li.linux,
+.category > #tag_mysql.on ~ .codeList > li.mysql,
+.category > #tag_FE.on ~ .codeList > li.FE,
+.category > #tag_BE.on ~ .codeList > li.BE,
+.category > #tag_All:checked ~ .cheatSheet > li,
+.category > #tag_JS:checked ~ .cheatSheet > li.JS,
+.category > #tag_git:checked ~ .cheatSheet > li.git,
+.category > #tag_linux:checked ~ .cheatSheet > li.linux,
+.category > #tag_mysql:checked ~ .cheatSheet > li.mysql,
+.category > #tag_FE:checked ~ .cheatSheet > li.FE,
+.category > #tag_BE:checked ~ .cheatSheet > li.BE,
+.category > #tag_JS.on ~ .cheatSheet > li.JS,
+.category > #tag_git.on ~ .cheatSheet > li.git,
+.category > #tag_linux.on ~ .cheatSheet > li.linux,
+.category > #tag_mysql.on ~ .cheatSheet > li.mysql,
+.category > #tag_FE.on ~ .cheatSheet > li.FE,
+.category > #tag_BE.on ~ .cheatSheet > li.BE,
+.category > #tag_All:checked ~ .navCode > dd,
+.category > #tag_JS:checked ~ .navCode > dd.JS,
+.category > #tag_git:checked ~ .navCode > dd.git,
+.category > #tag_linux:checked ~ .navCode > dd.linux,
+.category > #tag_mysql:checked ~ .navCode > dd.mysql,
+.category > #tag_FE:checked ~ .navCode > dd.FE,
+.category > #tag_BE:checked ~ .navCode > dd.BE,
+.category > #tag_JS.on ~ .navCode > dd.JS,
+.category > #tag_git.on ~ .navCode > dd.git,
+.category > #tag_linux.on ~ .navCode > dd.linux,
+.category > #tag_mysql.on ~ .navCode > dd.mysql,
+.category > #tag_FE.on ~ .navCode > dd.FE,
+.category > #tag_BE.on ~ .navCode > dd.BE {
+  display: block;
+}
+
 /* 메인 하단 무한 롤링 이미지 */
 
 @keyframes pulse {
@@ -1492,16 +1627,8 @@ i {
     margin-top: 0px;
   }
 
-  .sm\:mb-5 {
-    margin-bottom: 1.25rem;
-  }
-
   .sm\:mt-5 {
     margin-top: 1.25rem;
-  }
-
-  .sm\:mt-3 {
-    margin-top: 0.75rem;
   }
 
   .sm\:border-l {
