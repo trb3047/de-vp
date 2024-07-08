@@ -23,8 +23,9 @@ sub menu
 export default function Header() {
     const secureStorage = secureLocalStorage.default;
     const userNick = secureStorage.getItem('nick');
+    const userAdmin = secureStorage.getItem('ad');
     const nowPage = window.location.pathname;
-    let { on1, on2, on3, on4 } = '';
+    let { on1, on2, on3, on4, on5 } = '';
     const eventName = 'on';
     //각 페이지 메뉴 on이벤트
     switch (nowPage) {
@@ -39,6 +40,9 @@ export default function Header() {
         case '/junior' :
         case '/junior/code' :
             on3 = eventName;
+            break;
+        case '/@admin' :
+            on5 = eventName;
             break;
         default:
     }
@@ -60,6 +64,9 @@ export default function Header() {
                     <dd><a href='/junior' className={on3}>junior</a></dd>
                     {(() => {
                         if(userNick) return <dd><a href='/mypage' className={on4}>mypage</a></dd>;
+                    })()}
+                    {(() => {
+                       if(userAdmin) return <dd><a href='/@admin' className={on5}>admin</a></dd>;
                     })()}
                 </dl>
                 <dl className='snb absolute top-1 right-2 flex justify-end'>

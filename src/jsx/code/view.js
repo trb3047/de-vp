@@ -12,6 +12,8 @@ export default function CodeView() {
     const secureStorage = secureLocalStorage.default;
     const userID = secureStorage.getItem('id');
     const userNick = secureStorage.getItem('nick');
+    const userAdmin = secureStorage.getItem('ad');
+    const adChk = userAdmin === 1 && userNick === '블랙라임';
     const idx = new URL(window.location.href).searchParams.get('idx');
 
     useEffect(() => {
@@ -27,6 +29,11 @@ export default function CodeView() {
         const data = await getCodeView();
         let favorCadeData = await getFavorCode();
 
+        if (data.private === 'AN' && !adChk) {
+            alert('비공개 처리 된 code 입니다');
+            navigate('/');
+            return;
+        }
         tit.innerHTML = data.title;
         nick.innerHTML = `${data.date} | ${data.userNick}`;
         desc.innerHTML = data.desc;

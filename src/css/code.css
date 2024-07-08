@@ -100,10 +100,13 @@ i {
     @apply text-right sm:text-center p-2;
 }
 .navCode a {
-    @apply block overflow-hidden p-2 text-nowrap text-ellipsis;
+    @apply block overflow-hidden p-2;
 }
 .navCode a:hover {
     @apply text-sky-400;
+}
+.btnGoRoot {
+    @apply fixed bottom-1 right-1 sm:bottom-3 sm:right-3;
 }
 
 /* 마이페이지 favorite 페이징 */

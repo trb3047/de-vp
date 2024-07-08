@@ -53,8 +53,8 @@ export async function loginCheck(req, res) {
         const isMatch = await hashCompare(userPW, blobToStr);
         if (!isMatch) return res.status(401).json('비밀번호가 일치하지 않습니다.');
 
-        const { userID: id, userNick: nick, userEmail: email, level: lev } = userCheck[0];
-        res.status(200).json({ userID: id, userNick: nick, userEmail: email, level: lev });
+        const { userID: id, userNick: nick, userEmail: email, level: lev, admin: admin } = userCheck[0];
+        res.status(200).json({ userID: id, userNick: nick, userEmail: email, level: lev, admin: admin });
     } catch (err) {
         //console.log(err);
         res.status(500).json(err);

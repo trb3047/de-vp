@@ -61,6 +61,7 @@ export default function PageMyCheat() {
 
         getCode();
     }, [])
+    
     return (    
         <React.StrictMode>
             <Header />
@@ -87,7 +88,7 @@ export default function PageMyCheat() {
                     <p id='scrollNextPage'><span className='blind'>다음 목록 불러오기</span></p>
                     <div className='btnGroup overflow-hidden text-center mt-3'>
                         <a href='/' className='btn apply'>찾으러 가기</a>
-                        <a href='#root' className='btn float-right'>위로</a>
+                        <a href='#root' className='btn float-right btnGoRoot'>위로</a>
                     </div>
                 </div>
 

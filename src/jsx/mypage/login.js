@@ -28,10 +28,14 @@ export default function PageLogin() {
             if (res.status === 401) return alert(data);
             //로그인 성공
             if (res.status === 200) {
+                //차단 된 ID 로그인 처리
+                if (data.level === 0) return alert('차단 된 ID입니다');
+            
                 //암호화하고 데이터 저장
                 secureStorage.setItem('id', data.userID);
                 secureStorage.setItem('nick', data.userNick);
                 secureStorage.setItem('level', data.level);
+                secureStorage.setItem('ad', data.admin);
                 navigate('/');
             }
 

@@ -19,6 +19,9 @@ import PageMyCodeAdd from './jsx/mypage/myCodeAdd.js';
 import PageMyCodeEdit from './jsx/mypage/myCodeEdit.js';
 import PageCodeView from './jsx/code/view.js';
 
+//admin
+import PageAdmin from './jsx/admin/main.js';
+
 export default function App() {
   return (
     <Router>
@@ -42,6 +45,8 @@ export default function App() {
         <Route path='/senior/code' element={<PageCodeView />}></Route>
         <Route path='/junior/code' element={<PageCodeView />}></Route>
         <Route path='/contact' element={<PageContact />}></Route>
+
+        <Route path='/@admin' element={<PageAdmin />}></Route>
       </Routes>
     </Router>
   );

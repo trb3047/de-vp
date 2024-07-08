@@ -2,6 +2,7 @@ import express from 'express';
 import { signup, loginCheck, idCheck, nickCheck, findID, findPW, editPW, addFavorCode, getFavorCode, deleteFavorCode } from '../controllers/user.js';
 import { codeApply, codeEdit, codeDelete, getCodeList, getCodeV, getCodeSearch, getCodeFavorite, upRecomand, downRecomand } from '../controllers/code.js';
 import { getCommentList, commentApply, commentEdit, commentDelete } from '../controllers/comment.js';
+import { getUsers, getCodes, getComments, blockUsers, notBlockUsers, levelUp, codePrivateY, codePrivateN, commentPrivateY, commentPrivateN } from '../controllers/admin.js';
 
 //라우터 - 해당 경로로 접근시 연결한다
 const userRouter = express.Router();
@@ -52,5 +53,18 @@ userRouter.post('/getFavorCode', getFavorCode);
 userRouter.post('/deleteFavorCode', deleteFavorCode);
 userRouter.post('/upRecomand', upRecomand);
 userRouter.post('/downRecomand', downRecomand);
+
+//관리자
+userRouter.post('/getUsers', getUsers);
+userRouter.post('/getCodes', getCodes);
+userRouter.post('/getComments', getComments);
+userRouter.post('/blockUsers', blockUsers);
+userRouter.post('/notBlockUsers', notBlockUsers);
+userRouter.post('/levelUp', levelUp);
+userRouter.post('/codePrivateY', codePrivateY);
+userRouter.post('/codePrivateN', codePrivateN);
+userRouter.post('/commentPrivateY', commentPrivateY);
+userRouter.post('/commentPrivateN', commentPrivateN);
+
 
 export default userRouter;

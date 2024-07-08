@@ -122,6 +122,7 @@ export default function PageJoin() {
             console.log(err);
         }
     }
+    
     return (    
         <React.StrictMode>
             <Header />
