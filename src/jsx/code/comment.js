@@ -10,10 +10,6 @@ export default function Comment () {
     const [comment, setComment] = useState('');
     let commentID = 0;
 
-    useEffect(() => {
-        commentAll();
-    }, [])
-
     async function commentAll () {
         const res = await fetch('/api/getComment', {
             method: 'POST',
@@ -32,14 +28,14 @@ export default function Comment () {
                     commentList += 
                         `<li data-depth='1'>`
                         +    `<p class='nick'>${val.date} | ${val.userNick}</p>`
-                        +    `<p class='cont'>${(val.private === 'N') ? '[ 비공개 처리 된 댓글입니다 ]' : val.context}</p>`
+                        +    `<p class='cont'>${(val.private === 'N') ? '[ 비공개 처리된 댓글입니다 ]' : val.context}</p>`
                         +    `<div class='btnGroup'>`
                         +       `<button class='btn add' data-idx='${val.idx}'>댓글</button>`
                         +       `${(userID === val.userID) ? '<button class="btn delete" data-idx="' + val.idx + '">삭제</button><button class="btn apply edit" data-idx="' + val.idx + '">수정</button>' : ''}`
                         +    `</div>`
                         +    `<ol class='comment inner'>`;
                 
-                    data.map((innerVal, innerIndex) => {
+                    data.map((innerVal) => {
                         if (innerVal.commentID === val.idx) {
                             commentList +=
                                         `<li>`
@@ -210,6 +206,9 @@ export default function Comment () {
         }
     }
 
+    useEffect(() => {
+        commentAll();
+    }, [commentAll])
     
     return (
         <React.StrictMode>

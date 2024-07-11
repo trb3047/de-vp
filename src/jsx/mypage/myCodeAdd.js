@@ -16,13 +16,9 @@ export default function PageMyCodeAdd() {
     const [desc, setDesc] = useState('');
     const [code, setCode] = useState('');
     const [tag, setTag] = useState('JS');
+    const [tagColor, setTagColor] = useState('');
     const [privat, setPrivate] = useState('Y');
     const [useEditor, setUseEdittor] = useState('JS');
-
-    useEffect(() => {
-        //유저가 아닐 경우 접근 막기
-        if (!userNick || userNick === null) navigate('/');
-    }, [])
     
     //에디터 관련
     function compiler(id) {
@@ -49,7 +45,7 @@ export default function PageMyCodeAdd() {
 
             const res = await fetch('/api/codeApply', {
                 method: 'POST',
-                body: JSON.stringify({ userID: userID, userNick: userNick, title: tit, desc: desc, context: code, tag: tag, private: privat, level: userLevel, date: thisDate, editor: useEditor }),
+                body: JSON.stringify({ userID: userID, userNick: userNick, title: tit, desc: desc, context: code, tag: tag, private: privat, level: userLevel, date: thisDate, editor: useEditor, tagColor: tagColor }),
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -66,6 +62,48 @@ export default function PageMyCodeAdd() {
             console.log(err);
         }
     }
+
+    const getTags = async () => {
+        const res = await fetch('/api/getTag', {
+            method: 'POST',
+            body: JSON.stringify(),
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        let data = await res.json();
+        //console.log(data);
+        if (res.status === 200) {
+            const box = document.getElementById('tags');
+            let list = `<p class='blind'>분류 선택</p>`;
+            for (let e in data) {
+                const val = data[e];
+                if (e == 0) {
+                    setTag(val.name);
+                    list += `<input type='radio' name='tag' id='tag_${val.name}' checked value='${val.name}' data-color='${val.color}'>`
+                } else {
+                    list += `<input type='radio' name='tag' id='tag_${val.name}' value='${val.name}' data-color='${val.color}'>`
+                }
+                list += `<label for='tag_${val.name}'>${val.title}</label>`;
+            }
+            box.innerHTML = list;
+
+            const tagList = document.querySelectorAll('input[name="tag"]');
+            for (let i = 0; i < tagList.length; i += 1) {
+                const val = tagList[i];
+                val.onchange = function () {
+                    setTag(val.value);
+                    setTagColor(val.getAttribute('data-color'));
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        //유저가 아닐 경우 접근 막기
+        if (!userNick || userNick === null) navigate('/');
+        getTags();
+    }, [userNick, navigate, getTags])
 
     return (    
         <React.StrictMode>
@@ -91,20 +129,8 @@ export default function PageMyCodeAdd() {
                             <input type='radio' name='private' id='secret' value='N' onChange={() => {setPrivate('N')}} />
                             <label htmlFor='secret'>비공개</label>
                         </div>
-                       <div className='category mt-3 sm:mt-0 sm:float-right sm:ml-5 sm:pl-5 sm:border-l'>
-                            <p className='blind'>분류 선택</p>
-                            <input type='radio' name='tag' id='tag_JS' defaultChecked value='JS' onChange={() => {setTag('JS')}} />
-                            <label htmlFor='tag_JS'>javascript</label>
-                            <input type='radio' name='tag' id='tag_git' value='git' onChange={() => {setTag('git')}} />
-                            <label htmlFor='tag_git'>git</label>
-                            <input type='radio' name='tag' id='tag_linux' value='linux' onChange={() => {setTag('linux')}} />
-                            <label htmlFor='tag_linux'>linux</label>
-                            <input type='radio' name='tag' id='tag_mysql' value='mysql' onChange={() => {setTag('mysql')}} />
-                            <label htmlFor='tag_mysql'>mysql</label>
-                            <input type='radio' name='tag' id='tag_FE' value='FE' onChange={() => {setTag('FE')}} />
-                            <label htmlFor='tag_FE'>frontend</label>
-                            <input type='radio' name='tag' id='tag_BE' value='BE' onChange={() => {setTag('BE')}} />
-                            <label htmlFor='tag_BE'>backend</label>
+                       <div id='tags' className='category mt-3 sm:mt-0 sm:float-right sm:ml-5 sm:pl-5 sm:border-l'>
+                            
                         </div>
                         <div className='category sort mt-3 sm:mt-0 sm:float-right sm:text-right'>
                             <p className='blind'>언어 선택</p>

@@ -10,7 +10,7 @@ export default function PageFindIdResult() {
     //보여준 이후 정보 삭제
     useEffect(() => {
         secureStorage.clear();
-    }, [])
+    }, [secureStorage])
 
     return (    
         <React.StrictMode>

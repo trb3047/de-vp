@@ -12,52 +12,69 @@ export default function PageMyCode() {
     const userID = secureStorage.getItem('id');
     const userNick = secureStorage.getItem('nick');
     //const userLevel = secureStorage.getItem('level');
-    
-    useEffect(() => {
+    const pageTag = new URL(window.location.href).searchParams.get('tag');
 
-        //유저가 아닐 경우 접근 막기
-        if(!userNick || userNick === null) navigate('/');
-
-        async function getCode() {
-            const box = document.getElementById('codeList');
-            const data = await getCodeList();
-            let code = '';
-            for (let e in data) {
-                const { idx, title, desc, tag, date } = data[e];
-                code += '<li class="' + tag + '"><a href="/mypage/myCodeEdit?idx=' + idx + '">'
-                        +    '<h4><i class="' + tag + '">' + tag + '</i> ' + title + "</h4>"
-                        +    '<p class="date">' + date + '</p>'
+    async function getCode() {
+        const box = document.getElementById('codeList');
+        const data = await getCodeList();
+        let code = '';
+        for (let e in data) {
+            const { idx, title, desc, tag, date, recomand, tagColor } = data[e];
+            if(tag === pageTag || pageTag === 'ALL') {
+                code += '<li><a href="/mypage/myCodeEdit?idx=' + idx + '">'
+                        +    `<h4><i class='icon' style='background-color:${tagColor}'>${tag}</i> ${title}</h4>`
+                        +    '<p class="date">' + date + ' | 즐겨찾기: ' + recomand + '</p>'
                         +    '<p class="desc">' + desc + '</p>'
                         //+    "<div id='code" + Number(e + 1) + "' class='code javascript'>" + CodeEditor(codeData.context) + "</div>"
                         + "</a></li>";
-                
-            }
-            if (code === '') {
-                box.innerHTML = '<li class="noResult">아직 작성한 code가 없습니다</li>';
-    
-            } else {
-                box.innerHTML = code;
             }
         }
+
+        box.innerHTML = (code === '') ? '<li class="noResult">아직 작성한 code가 없습니다</li>' : code;
         
-        async function getCodeList() {
-            
-            const res = await fetch('/api/getCode', {
-                method: 'POST',
-                body: JSON.stringify({ userID: userID }),
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' }
-            });
+    }
+    
+    async function getCodeList() {
+        
+        const res = await fetch('/api/getCode', {
+            method: 'POST',
+            body: JSON.stringify({ userID: userID }),
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
 
-            let data = await res.json();
-            
-            return data;
+        let data = await res.json();
+        
+        return data;
+    }
+
+    const getTags = async () => {
+        const res = await fetch('/api/getTag', {
+            method: 'POST',
+            body: JSON.stringify(),
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        let data = await res.json();
+        //console.log(data);
+        if (res.status === 200) {
+            const box = document.getElementById('tags');
+            let list = `<p class='blind'>대분류 선택</p>`
+                    +  `<a href='/mypage/myCode?tag=ALL' class=${(pageTag === 'ALL') ? 'on' : ''}>전체</a>`;
+            for (let e in data) {
+                const val = data[e];
+                list += `<a id='tag_${val.name}' href='/mypage/myCode?tag=${val.name}' class=${(val.name === pageTag) ? 'on' : ''}>${val.title}</a>`;
+            }
+            box.innerHTML = list;
         }
+    }
 
-        getCode();
-    }, [])
-
-
+    useEffect(() => {
+        //유저가 아닐 경우 접근 막기
+        if(!userNick || userNick === null) navigate('/');
+        Promise.all([getTags(), getCode()]);
+    }, [userNick, navigate, getTags, getCode])
 
     return (    
         <React.StrictMode>
@@ -65,28 +82,14 @@ export default function PageMyCode() {
             <main>
                 <div className='category text-center'>
                     <p className='blind'>카테고리 선택</p>
-                    <a href='/mypage'>favorite</a>
+                    <a href='/mypage?tag=ALL'>favorite</a>
                     <a href='/mypage/cheatSheet?tag=JS'>cheat sheet</a>
-                    <a href='/mypage/myCode' className='on'>my code</a>
+                    <a href='/mypage/myCode?tag=ALL' className='on'>my code</a>
                 </div>
                 <div id='cont' className='mt-5'>
                     <h2 className="text-xl text-center">{userNick}의 code</h2>
-                    <div className='category text-right mt-3'>
-                        <p className='blind'>대분류 선택</p>
-                        <input type='radio' name='tag' id='tag_All' defaultChecked value='*' />
-                        <label htmlFor='tag_All'>전체</label>
-                        <input type='radio' name='tag' id='tag_JS' vlaue='JS' />
-                        <label htmlFor='tag_JS' className='JS'>javascript</label>
-                        <input type='radio' name='tag' id='tag_git' vlaue='git' />
-                        <label htmlFor='tag_git' className='git'>git</label>
-                        <input type='radio' name='tag' id='tag_linux' vlaue='linux' />
-                        <label htmlFor='tag_linux' className='linux'>linux</label>
-                        <input type='radio' name='tag' id='tag_mysql' value='mysql' />
-                        <label htmlFor='tag_mysql'>mysql</label>
-                        <input type='radio' name='tag' id='tag_FE' vlaue='FE' />
-                        <label htmlFor='tag_FE' className='FE'>frontend</label>
-                        <input type='radio' name='tag' id='tag_BE' vlaue='BE' />
-                        <label htmlFor='tag_BE' className='BE'>backend</label>
+                    <div className='text-right mt-3'>
+                        <div id='tags' className='category'></div>
                         <ul id='codeList' className="codeList mt-3 text-left"></ul>
                     </div>
                     <p id='scrollNextPage'><span className='blind'>다음 목록 불러오기</span></p>

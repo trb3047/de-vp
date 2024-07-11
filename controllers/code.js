@@ -2,9 +2,9 @@ import { codeApplyDB, codeEditDB, codeDeleteDB, getCode, getCodeView, getCodeSea
 
 //code 저장
 export async function codeApply(req, res) {
-    const { userID, userNick, title, desc, context, tag, private: privat, level, date, editor } = req.body;
+    const { userID, userNick, title, desc, context, tag, private: privat, level, date, editor, tagColor } = req.body;
     try {
-        const codeApplyF = await codeApplyDB([userID, userNick, title, desc, context, tag, privat, level, date, editor]);
+        const codeApplyF = await codeApplyDB([userID, userNick, title, desc, context, tag, privat, level, date, editor, tagColor]);
         //저장 완료 후 메세지 보내기
         res.status(200).json('code 작성 완료');
     } catch (err) {
@@ -14,9 +14,9 @@ export async function codeApply(req, res) {
 }
 
 export async function codeEdit(req, res) {
-    const { idx, title, desc, context, tag, private: privat, date, editor } = req.body;
+    const { idx, title, desc, context, tag, private: privat, date, editor, tagColor } = req.body;
     try {
-        const codeApplyF = await codeEditDB([idx, title, desc, context, tag, privat, date, editor]);
+        const codeApplyF = await codeEditDB([idx, title, desc, context, tag, privat, date, editor, tagColor]);
         //저장 완료 후 메세지 보내기
         res.status(200).json('code 수정 완료');
     } catch (err) {

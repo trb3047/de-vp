@@ -53,20 +53,8 @@
 i.JS {
     @apply bg-violet-500 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
 }
-i.git {
-    @apply bg-zinc-800 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
-}
-i.linux {
-    @apply bg-gray-500 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
-}
-i.mysql {
-    @apply bg-sky-700 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
-}
-i.FE {
-    @apply bg-yellow-500 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
-}
-i.BE {
-    @apply bg-indigo-700 text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
+i.icon {
+    @apply text-white not-italic text-sm rounded-md pr-1 pl-1 font-thin;
 }
 
 /* highlight */

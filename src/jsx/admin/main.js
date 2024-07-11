@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //보안 강화한 local storage
 import secureLocalStorage from 'react-secure-storage';
@@ -12,12 +12,6 @@ export default function PageAdmin () {
     const userNick = secureStorage.getItem('nick');
     const adChk = userAdmin === 1 && userNick === '블랙라임';
     let page = 'user';
-
-    useEffect(() => {
-        //관리자 외엔 튕구기
-        if(!adChk) navigate('/');
-        getUsers();
-    }, [])
 
     const getUsers = async () => {
         const res = await fetch('/api/getUsers', {
@@ -67,6 +61,82 @@ export default function PageAdmin () {
         }
     }
 
+    const getTags = async () => {
+        const res = await fetch('/api/getTag', {
+            method: 'POST',
+            body: JSON.stringify(),
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        let data = await res.json();
+        //console.log(data);
+        if (res.status === 200) {
+            page = 'tag';
+            const box = document.getElementById('list');
+            let list = ``;
+            list += `<div class='mt-3 pl-2 pr-2 sm:pl-0 sm:pr-0 sm:float-left sm:w-2/4'>`;
+            for (let e in data) {
+                if (e == 0) {
+                    list += `<i style='background-color:${data[e].color}' class='icon'>${data[e].name}</i>`
+                } else {
+                   list += `<i style='background-color:${data[e].color}' class='ml-2 icon'>${data[e].name}</i>`
+                }
+            }
+            list += `</div>`;
+
+            list += `<div class='mt-3 pl-2 pr-2 sm:pl-0 sm:pr-0 sm:float-left sm:w-2/4'>`
+                + `<form action='javascript:;' id='addTagForm' class='block sm:ml-2'>`
+                + `<label class='block'>`
+                +   `<h4 class='mb-2'>제목</h4>`
+                +   `<input type='text' id='tit' class='input w-full' placeholder='대분류 제목으로 사용됩니다'>`
+                + `</label>`
+                + `<label class='block mt-2'>`
+                +   `<h4 class='mb-2'>아이콘 이름</h4>`
+                +   `<input type='text' id='name' class='input w-full' placeholder='아이콘으로 사용됩니다'>`
+                + `</label>`
+                + `<label class='block mt-2'>`
+                +   `<h4 class='mb-2'>아이콘 색상</h4>`
+                +   `<input type='text' id='color' class='input w-full' placeholder='아이콘의 배경색으로 사용됩니다 ex) #8b5cf6, rgb(0, 0, 0)'>`
+                + `</label>`
+                + `<div class='mt-3 text-right'>`
+                +   `<input type='submit' value='추가하기' class='btn join'>`
+                + `</div>`
+                + `</form>`
+                + `</div>`;
+
+            box.innerHTML = list;
+
+            document.getElementById('addTagForm').onsubmit = function (e) {
+                e.preventDefault();
+                const title = document.getElementById('tit').value;
+                const name = document.getElementById('name').value;
+                const color = document.getElementById('color').value;
+                addTags(title, name, color);
+            }
+
+        }
+    }
+    const addTags = async (title, name, color) => {
+        try {
+            const res = await fetch('/api/addTag', {
+                method: 'POST',
+                body: JSON.stringify({ title: title, name: name, color: color }),
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            });
+    
+            let data = await res.json();
+            //console.log(data);
+            if (res.status === 200) {
+                alert(data);
+                getTags();
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     //유저 차단
     const blockUsers = async () => {
         const reqData = selectData();
@@ -107,7 +177,7 @@ export default function PageAdmin () {
     const levUpUser = async () => {
         const reqData = selectData();
         try {
-            const res = await fetch('/api/levelUp', {
+            const res = await fetch('/api/'+ page +'LevelUp', {
                 method: 'POST',
                 body: JSON.stringify(reqData),
                 credentials: 'include',
@@ -189,7 +259,7 @@ export default function PageAdmin () {
 
     const print = (data) => {
         let list = `<p class='pt-2 pb-2'><label><input type='checkbox' id='chkAll'> 전체 선택</label></p>`
-        + `<ul class=''>`;
+        + `<ul>`;
         data.map((val) => {
             list += `<li class='flex justify-between pt-2 pb-2 border-t border-gray-300'>`;
             //console.log(val);
@@ -218,9 +288,9 @@ export default function PageAdmin () {
         list += `</ul>`
             + `<div class='overflow-hidden text-right mt-2'>`
             + `<button class='btn delete float-left' id='btnBlock'>유저 차단</button>`
-            + `<button class='btn apply float-left' id='btnNotBlock'>차단 해제</button>`
-            + `<button class='btn join float-left' id='btnLevUp'>시니어 등록</button>`
-            + `<button class='btn float-right' id='btnPrivateN'>비공개</button>`
+            + `<button class='btn apply float-left' id='btnNotBlock'>차단 해제</button>`;
+        list += (page !== 'comment') ? `<button class='btn join float-left' id='btnLevUp'>시니어 등록</button>` : ``;
+        list +=  `<button class='btn float-right' id='btnPrivateN'>비공개</button>`
             + `<button class='btn float-right' id='btnPrivateY'>공개</button>`
             + `</div>`;
 
@@ -241,9 +311,10 @@ export default function PageAdmin () {
         document.getElementById('btnNotBlock').onclick = function () {
             notBlockUsers();
         }
-
-        document.getElementById('btnLevUp').onclick = function () {
-            levUpUser();
+        if (page !== 'comment') {
+            document.getElementById('btnLevUp').onclick = function () {
+                levUpUser();
+            }
         }
 
         document.getElementById('btnPrivateY').onclick = function () {
@@ -255,6 +326,12 @@ export default function PageAdmin () {
         }
     }
 
+    useEffect(() => {
+        //관리자 외엔 튕구기
+        if(!adChk) navigate('/');
+        getUsers();
+    }, [adChk, navigate, getUsers])
+    
     return (
         <React.StrictMode>
             <Header />
@@ -264,8 +341,9 @@ export default function PageAdmin () {
                     <dd className='inline-block'><button className='btn apply text-sm' onClick={getUsers}>이용자</button></dd>
                     <dd className='inline-block ml-3'><button className='btn apply text-sm' onClick={getCodes}>code</button></dd>
                     <dd className='inline-block ml-3'><button className='btn apply text-sm' onClick={getComments}>댓글</button></dd>
+                    <dd className='inline-block ml-3'><button className='btn apply text-sm' onClick={getTags}>카테고리</button></dd>
                 </dl>
-                <div className='' id='list'>
+                <div id='list' className='overflow-hidden'>
 
                 </div>
             </main>

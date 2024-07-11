@@ -13,75 +13,88 @@ export default function PageMyCheat() {
     const userNick = secureStorage.getItem('nick');
     const pageTag = new URL(window.location.href).searchParams.get('tag');
 
-    useEffect(() => {
-        //유저가 아닐 경우 접근 막기
-        if(!userNick || userNick === null) navigate('/');
+    async function getCode() {
+        const box = document.getElementById('codeList');
+        const navCode = document.getElementById('navCode');
 
-        async function getCode() {
-            const box = document.getElementById('codeList');
-            const navCode = document.getElementById('navCode');
-            const data = await getCodeList();
-            let code = '';
-            let nav = '';
-            for (let e in data) {
-                let { idx, title, desc, tag, date, userNick, editor, context } = data[e];
-                if(!editor) editor = 'JS';
-
-                code += '<li class="' + tag + '" id="code' + (Number(e) + 1) + '">'
-                        +    '<h4><i class="' + tag + '">' + tag +  '</i> ' + title + "</h4>"
+        const data = await getCodeList();
+        let code = '';
+        let nav = '';
+        for (let e in data) {
+            let { idx, title, desc, tag, editor, context, tagColor } = data[e];
+            if(!editor) editor = 'JS';
+            if(tag === pageTag) {
+                code += '<li id="code' + (Number(e) + 1) + '">'
+                        +    `<h4><i class='icon' style='background-color:${tagColor}'>${tag}</i> ${title}</h4>`
                         +    '<p class="desc">' + desc + '</p>'
                         +    "<div class='codeBox'><div class='code " + editor + "'>" + CodeEditor(context) + "</div></div>"
-                        + "</li>";
+                        + '</li>';
                 
-                nav += `<dd class='${tag}' data-idx='${idx}'><a href='#code${Number(e) + 1}'>${title}</a></dd>`;
-            }
-            if (code === '') {
-                box.innerHTML = '<li class="noResult">아직 등록한 code가 없습니다</li>';
-    
-            } else {
-                box.innerHTML = code;
-                navCode.innerHTML = `<dt>code 바로가기</dt>` + nav;
-                //+ `<dd class='btnBox'><button class='btn apply'>순서 수정하기</button></dd>`
+                nav += `<dd data-idx='${idx}'><a href='#code${Number(e) + 1}'>${title}</a></dd>`;
             }
         }
         
-        async function getCodeList() {
-            
-            const res = await fetch('/api/getCodeFavorite', {
-                method: 'POST',
-                body: JSON.stringify({ userID: userID }),
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            let data = await res.json();
-            
-            if (res.status === 200) return data;
-        }
-
-        getCode();
-    }, [])
+        box.innerHTML = (code === '') ? '<li class="noResult">아직 등록한 code가 없습니다</li>' : code;
+        navCode.innerHTML = `<dt>code 바로가기</dt>` + nav;
+        //+ `<dd class='btnBox'><button class='btn apply'>순서 수정하기</button></dd>`
+        
+    }
     
+    async function getCodeList() {
+        
+        const res = await fetch('/api/getCodeFavorite', {
+            method: 'POST',
+            body: JSON.stringify({ userID: userID }),
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        let data = await res.json();
+
+        if (res.status === 200) return data;
+    }
+
+    const getTags = async () => {
+        const res = await fetch('/api/getTag', {
+            method: 'POST',
+            body: JSON.stringify(),
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        let data = await res.json();
+        //console.log(data);
+        if (res.status === 200) {
+            const box = document.getElementById('tags');
+            let list = `<p class='blind'>대분류 선택</p>`;
+            for (let e in data) {
+                const val = data[e];
+                list += `<a id='tag_${val.name}' href='/mypage/cheatSheet?tag=${val.name}' class=${(val.name === pageTag) ? 'on' : ''}>${val.title}</a>`;
+            }
+            box.innerHTML = list;
+        }
+    }
+
+    useEffect(() => {
+        //유저가 아닐 경우 접근 막기
+        if(!userNick || userNick === null) navigate('/');
+        Promise.all([getTags(), getCode()]);
+    }, [userNick, navigate, getTags, getCode])
+
     return (    
         <React.StrictMode>
             <Header />
             <main>
                 <div className='category text-center'>
                     <p className='blind'>카테고리 선택</p>
-                    <a href='/mypage'>favorite</a>
+                    <a href='/mypage?tag=ALL'>favorite</a>
                     <a href='/mypage/cheatSheet?tag=JS' className='on'>cheat sheet</a>
-                    <a href='/mypage/myCode'>my code</a>
+                    <a href='/mypage/myCode?tag=ALL'>my code</a>
                 </div>
                 <div id='cont' className='mt-5'>
                     <h2 className="text-xl text-center">{userNick}의 cheat sheet</h2>
-                    <div className='category text-right mt-3 relative'>
-                        <p className='blind'>대분류 선택</p>
-                        <a id='tag_JS' href='/mypage/cheatSheet?tag=JS' className={pageTag === 'JS' ? 'on' : ''} >javascript</a>
-                        <a id='tag_git' href='/mypage/cheatSheet?tag=git' className={pageTag === 'git' ? 'on' : ''} >git</a>
-                        <a id='tag_linux' href='/mypage/cheatSheet?tag=linux' className={pageTag === 'linux' ? 'on' : ''} >linux</a>
-                        <a id='tag_mysql' href='/mypage/cheatSheet?tag=mysql' className={pageTag === 'mysql' ? 'on' : ''} >mysql</a>
-                        <a id='tag_FE' href='/mypage/cheatSheet?tag=FE' className={pageTag === 'FE' ? 'on' : ''} >frontend</a>
-                        <a id='tag_BE' href='/mypage/cheatSheet?tag=BE' className={pageTag === 'BE' ? 'on' : ''} >backend</a>
+                    <div className='text-right mt-3 relative'>
+                        <div id='tags' className='category'></div>
                         <dl className='navCode' id='navCode'></dl>
                         <ul id='codeList' className="cheatSheet"></ul>
                     </div>

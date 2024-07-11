@@ -603,14 +603,6 @@ video {
   top: 0.25rem;
 }
 
-.bottom-0 {
-  bottom: 0px;
-}
-
-.left-0 {
-  left: 0px;
-}
-
 .float-right {
   float: right;
 }
@@ -625,6 +617,14 @@ video {
 
 .mb-5 {
   margin-bottom: 1.25rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
 }
 
 .ml-auto {
@@ -655,10 +655,6 @@ video {
   margin-top: 2rem;
 }
 
-.ml-3 {
-  margin-left: 0.75rem;
-}
-
 .block {
   display: block;
 }
@@ -679,20 +675,16 @@ video {
   width: 16.666667%;
 }
 
-.w-full {
-  width: 100%;
-}
-
-.w-60 {
-  width: 15rem;
+.w-40 {
+  width: 10rem;
 }
 
 .w-80 {
   width: 20rem;
 }
 
-.w-40 {
-  width: 10rem;
+.w-full {
+  width: 100%;
 }
 
 .max-w-screen-md {
@@ -701,15 +693,6 @@ video {
 
 .max-w-screen-sm {
   max-width: 640px;
-}
-
-.max-w-max {
-  max-width: -webkit-max-content;
-  max-width: max-content;
-}
-
-.max-w-none {
-  max-width: none;
 }
 
 .justify-end {
@@ -722,14 +705,6 @@ video {
 
 .justify-between {
   justify-content: space-between;
-}
-
-.justify-around {
-  justify-content: space-around;
-}
-
-.justify-stretch {
-  justify-content: stretch;
 }
 
 .overflow-hidden {
@@ -763,11 +738,6 @@ video {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
 .bg-gray-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
@@ -779,6 +749,10 @@ video {
 
 .pb-10 {
   padding-bottom: 2.5rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .pb-5 {
@@ -815,14 +789,6 @@ video {
 
 .pt-5 {
   padding-top: 1.25rem;
-}
-
-.pl-60 {
-  padding-left: 15rem;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
 }
 
 .text-left {
@@ -871,14 +837,14 @@ video {
   color: rgb(34 197 94 / var(--tw-text-opacity));
 }
 
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 .text-sky-400 {
   --tw-text-opacity: 1;
   color: rgb(56 189 248 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .shadow-md {
@@ -1018,66 +984,8 @@ i.JS {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-i.git {
+i.icon {
   border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(39 39 42 / var(--tw-bg-opacity));
-  padding-right: 0.25rem;
-  padding-left: 0.25rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 100;
-  font-style: normal;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-i.linux {
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
-  padding-right: 0.25rem;
-  padding-left: 0.25rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 100;
-  font-style: normal;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-i.mysql {
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(3 105 161 / var(--tw-bg-opacity));
-  padding-right: 0.25rem;
-  padding-left: 0.25rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 100;
-  font-style: normal;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-i.FE {
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(234 179 8 / var(--tw-bg-opacity));
-  padding-right: 0.25rem;
-  padding-left: 0.25rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 100;
-  font-style: normal;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-i.BE {
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(67 56 202 / var(--tw-bg-opacity));
   padding-right: 0.25rem;
   padding-left: 0.25rem;
   font-size: 0.875rem;
@@ -1399,6 +1307,15 @@ i {
   text-align: left;
 }
 
+.cheatSheet .noResult {
+  display: block !important;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  text-align: center;
+}
+
 .cheatSheet > li {
   width: 100%;
   --tw-bg-opacity: 1;
@@ -1487,59 +1404,6 @@ i {
     bottom: 0.75rem;
     right: 0.75rem;
   }
-}
-
-/* 마이페이지 favorite 페이징 */
-
-.category > input ~ .codeList > li,
-.category > a ~ .codeList > li,
-.category > input ~ .cheatSheet > li,
-.category > a ~ .cheatSheet > li,
-.category > input ~ .navCode > dd,
-.category > a ~ .navCode > dd {
-  display: none;
-}
-
-.category > #tag_All:checked ~ .codeList > li,
-.category > #tag_JS:checked ~ .codeList > li.JS,
-.category > #tag_git:checked ~ .codeList > li.git,
-.category > #tag_linux:checked ~ .codeList > li.linux,
-.category > #tag_mysql:checked ~ .codeList > li.mysql,
-.category > #tag_FE:checked ~ .codeList > li.FE,
-.category > #tag_BE:checked ~ .codeList > li.BE,
-.category > #tag_JS.on ~ .codeList > li.JS,
-.category > #tag_git.on ~ .codeList > li.git,
-.category > #tag_linux.on ~ .codeList > li.linux,
-.category > #tag_mysql.on ~ .codeList > li.mysql,
-.category > #tag_FE.on ~ .codeList > li.FE,
-.category > #tag_BE.on ~ .codeList > li.BE,
-.category > #tag_All:checked ~ .cheatSheet > li,
-.category > #tag_JS:checked ~ .cheatSheet > li.JS,
-.category > #tag_git:checked ~ .cheatSheet > li.git,
-.category > #tag_linux:checked ~ .cheatSheet > li.linux,
-.category > #tag_mysql:checked ~ .cheatSheet > li.mysql,
-.category > #tag_FE:checked ~ .cheatSheet > li.FE,
-.category > #tag_BE:checked ~ .cheatSheet > li.BE,
-.category > #tag_JS.on ~ .cheatSheet > li.JS,
-.category > #tag_git.on ~ .cheatSheet > li.git,
-.category > #tag_linux.on ~ .cheatSheet > li.linux,
-.category > #tag_mysql.on ~ .cheatSheet > li.mysql,
-.category > #tag_FE.on ~ .cheatSheet > li.FE,
-.category > #tag_BE.on ~ .cheatSheet > li.BE,
-.category > #tag_All:checked ~ .navCode > dd,
-.category > #tag_JS:checked ~ .navCode > dd.JS,
-.category > #tag_git:checked ~ .navCode > dd.git,
-.category > #tag_linux:checked ~ .navCode > dd.linux,
-.category > #tag_mysql:checked ~ .navCode > dd.mysql,
-.category > #tag_FE:checked ~ .navCode > dd.FE,
-.category > #tag_BE:checked ~ .navCode > dd.BE,
-.category > #tag_JS.on ~ .navCode > dd.JS,
-.category > #tag_git.on ~ .navCode > dd.git,
-.category > #tag_linux.on ~ .navCode > dd.linux,
-.category > #tag_mysql.on ~ .navCode > dd.mysql,
-.category > #tag_FE.on ~ .navCode > dd.FE,
-.category > #tag_BE.on ~ .navCode > dd.BE {
-  display: block;
 }
 
 /* 메인 하단 무한 롤링 이미지 */
@@ -1706,11 +1570,6 @@ i {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
-.hover\:text-sky-300:hover {
-  --tw-text-opacity: 1;
-  color: rgb(125 211 252 / var(--tw-text-opacity));
-}
-
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
@@ -1718,6 +1577,14 @@ i {
 @media (min-width: 640px) {
   .sm\:float-right {
     float: right;
+  }
+
+  .sm\:float-left {
+    float: left;
+  }
+
+  .sm\:ml-2 {
+    margin-left: 0.5rem;
   }
 
   .sm\:ml-5 {
@@ -1730,6 +1597,10 @@ i {
 
   .sm\:mt-5 {
     margin-top: 1.25rem;
+  }
+
+  .sm\:w-2\/4 {
+    width: 50%;
   }
 
   .sm\:border-l {

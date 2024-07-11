@@ -6,8 +6,6 @@ import Footer from '../footer.js';
 
 export default function CodeList() {
     let pageLev = window.location.pathname;
-    const secureStorage = secureLocalStorage.default;
-    const userID = secureStorage.getItem('id');
     const [sort, setSort] = useState('DESC');
     const [tag, setTag] = useState('*');
     const [search, setSearch] = useState('');
@@ -27,23 +25,6 @@ export default function CodeList() {
             pageLev = '';
     }
 
-    useEffect(() => {
-        getCodeList();
-        
-        window.onscroll = function (e) {
-            if(scrollTimer === 0) {
-                const topTarget = document.getElementById('scrollNextPage').getBoundingClientRect().top;
-                
-                if (topTarget < 1000) {
-                    scrollTimer = 1;
-                    page++;
-                    getCodeList();
-                }
-            }
-        }
-
-    }, [])
-
     const getCodeList = async function () {
         if (page === null || !page) page = 0;
         if (codeTimer === 1) return;
@@ -56,7 +37,7 @@ export default function CodeList() {
             if (!data.length) return;
 
             for (let e in data) {
-                let { idx, title, desc, tag, context, date, userNick, editor, recomand } = data[e];
+                let { idx, title, desc, tag, context, date, userNick, editor, recomand, tagColor } = data[e];
                 if(!editor) editor = 'JS';
                 if(search.length > 1) {
                     title = title.replace(search, '<i class="highlight">' + search + '</i>');
@@ -64,7 +45,8 @@ export default function CodeList() {
                 }
 
                 result += '<li><a href="' + pageLev + '/code?idx=' + idx + '">'
-                    + '<h4><i class="'+ tag +'">' + tag + '</i> ' + title + '</h4>'
+                    + `<h4><i class='icon' style='background-color:${tagColor}'>${tag}</i> ` 
+                    + title + '</h4>'
                     + '<p class="date">' + date + ' | ' + userNick + ' | 즐겨찾기: ' + recomand + '</p>'
                     + '<p class="desc">' + desc + '</p>'
                     + '<div class="codeBox"><div class="code ' + editor + '">' + CodeEditor(context)  + '</div></div>'
@@ -107,6 +89,54 @@ export default function CodeList() {
         }
     }
 
+    const getTags = async () => {
+        const res = await fetch('/api/getTag', {
+            method: 'POST',
+            body: JSON.stringify(),
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        let data = await res.json();
+        //console.log(data);
+        if (res.status === 200) {
+            const box = document.getElementById('tags');
+            let list = `<p class='blind'>대분류 선택</p>`
+                    + `<input type='radio' name='tag' id='tag_All' checked  value='*'>`
+                    + `<label for='tag_All'>전체</label>`;
+            for (let e in data) {
+                const val = data[e];
+                list += `<input type='radio' name='tag' id='tag_${val.name}' value='${val.name}' />`
+                    + `<label for='tag_${val.name}'>${val.title}</label>`;
+            }
+            box.innerHTML = list;
+
+            const tagList = document.querySelectorAll('input[name="tag"]');
+            for (let i = 0; i < tagList.length; i += 1) {
+                tagList[i].onchange = function () {
+                    setTag(tagList[i].value);
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        Promise.all([getTags(), getCodeList()]);
+
+        window.onscroll = function (e) {
+            if(scrollTimer === 0) {
+                const topTarget = document.getElementById('scrollNextPage').getBoundingClientRect().top;
+                
+                if (topTarget < 1000) {
+                    scrollTimer = 1;
+                    page++;
+                    getCodeList();
+                }
+            }
+        }
+
+    }, [getTags, getCodeList, scrollTimer, page])
+
     return (
         <React.StrictMode>
             <Header />
@@ -120,22 +150,8 @@ export default function CodeList() {
                         <input type='radio' name='sort' id='sort_pop' value='pop' onChange={() => {setSort('pop')}} />
                         <label htmlFor='sort_pop'>인기</label>
                     </div>
-                    <div className='category sm:float-right'>
-                        <p className='blind'>대분류 선택</p>
-                        <input type='radio' name='tag' id='tag_All' defaultChecked  value='*' onChange={() => {setTag('*');}} />
-                        <label htmlFor='tag_All'>전체</label>
-                        <input type='radio' name='tag' id='tag_JS' vlaue='JS' onChange={() => {setTag('JS');}} />
-                        <label htmlFor='tag_JS' className='JS'>javascript</label>
-                        <input type='radio' name='tag' id='tag_git' vlaue='git' onChange={() => {setTag('git');}} />
-                        <label htmlFor='tag_git' className='git'>git</label>
-                        <input type='radio' name='tag' id='tag_linux' vlaue='linux' onChange={() => {setTag('linux');}} />
-                        <label htmlFor='tag_linux' className='linux'>linux</label>
-                        <input type='radio' name='tag' id='tag_mysql' value='mysql' onChange={() => {setTag('mysql')}} />
-                        <label htmlFor='tag_mysql'>mysql</label>
-                        <input type='radio' name='tag' id='tag_FE' vlaue='FE' onChange={() => {setTag('FE');}} />
-                        <label htmlFor='tag_FE' className='FE'>frontend</label>
-                        <input type='radio' name='tag' id='tag_BE' vlaue='BE' onChange={() => {setTag('BE');}} />
-                        <label htmlFor='tag_BE' className='BE'>backend</label>
+                    <div id='tags' className='category sm:float-right'>
+
                     </div>
                     <div className='searchBox float-right w-full mt-0 mb-5 sm:mt-5'>
                         <p className='blind'>검색 하기</p>

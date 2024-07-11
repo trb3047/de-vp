@@ -12,42 +12,35 @@ export default function PageMyCodeAdd() {
     const idx = new URL(window.location.href).searchParams.get('idx');
     const userID = secureStorage.getItem('id');
     const userNick = secureStorage.getItem('nick');
-    const userLevel = secureStorage.getItem('level');
     const [tit, setTit] = useState('');
     const [desc, setDesc] = useState('');
     const [code, setCode] = useState('');
     const [tag, setTag] = useState('JS');
+    const [tagColor, setTagColor] = useState('');
     const [privat, setPrivate] = useState('Y');
     const [useEditor, setUseEditor] = useState('JS');
 
-    useEffect(() => {
-        //유저가 아닐 경우 접근 막기
-        if (!userNick || userNick === null) navigate('/');
-        async function getCode() {
-            const tit = document.getElementById('title');
-            const codeBox = document.getElementById('code');
-            const desc = document.getElementById('desc');
-            const text = document.getElementById('textarea');
-            const data = await getCodeView();
-            let { title: dataTitle, desc: dataDesc, context: dataContext, userID: dataID, tag: dataTag, private: dataPrivate, editor: dataUseEditor } = data;
-            //자신의 코드가 아닐 경우 리다이렉트
-            if(userID !== dataID) navigate('/');
-            
-            setTit(dataTitle);
-            setDesc(dataDesc);
-            setCode(dataContext);
-            setTag(dataTag);
-            setPrivate(dataPrivate);
-            if (!dataUseEditor) dataUseEditor = 'JS'; 
-            setUseEditor(dataUseEditor);
+    async function getCode() {
+        const codeBox = document.getElementById('code');
+        const data = await getCodeView();
+        let { title: dataTitle, desc: dataDesc, context: dataContext, userID: dataID, tag: dataTag, private: dataPrivate, editor: dataUseEditor, tagColor: dataTagColor } = data;
+        //자신의 코드가 아닐 경우 리다이렉트
+        if(userID !== dataID) navigate('/');
+        
+        setTit(dataTitle);
+        setDesc(dataDesc);
+        setCode(dataContext);
+        setTag(dataTag);
+        setTagColor(dataUseEditor);
+        setPrivate(dataPrivate);
+        if (!dataUseEditor) dataUseEditor = 'JS'; 
+        setUseEditor(dataTagColor);
 
-            document.getElementById('tag_' + dataTag).checked = true;
-            document.getElementById('private_' + dataPrivate).checked = true;
-            document.getElementById('lang_' + dataUseEditor).checked = true;
-            codeBox.innerHTML = codeEditor(dataContext);
-        }
-        getCode();
-    }, [])
+        document.getElementById('tag_' + dataTag).checked = true;
+        document.getElementById('private_' + dataPrivate).checked = true;
+        document.getElementById('lang_' + dataUseEditor).checked = true;
+        codeBox.innerHTML = codeEditor(dataContext);
+    }    
     
     //에디터 관련
     const compiler = function (id) {
@@ -71,10 +64,9 @@ export default function PageMyCodeAdd() {
         try {
             const today = new Date();
             const thisDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')} ${today.getHours().toString().padStart(2, '0')}:${today.getMinutes().toString().padStart(2, '0')}`;
-
             const res = await fetch('/api/codeEdit', {
                 method: 'POST',
-                body: JSON.stringify({ idx: idx, title: tit, desc: desc, context: code, tag: tag, private: privat, date: thisDate, editor: useEditor }),
+                body: JSON.stringify({ idx: idx, title: tit, desc: desc, context: code, tag: tag, private: privat, date: thisDate, editor: useEditor, tagColor: tagColor }),
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -122,6 +114,48 @@ export default function PageMyCodeAdd() {
         }
     } 
 
+    const getTags = async () => {
+        const res = await fetch('/api/getTag', {
+            method: 'POST',
+            body: JSON.stringify(),
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        let data = await res.json();
+        //console.log(data);
+        if (res.status === 200) {
+            const box = document.getElementById('tags');
+            let list = `<p class='blind'>분류 선택</p>`;
+            for (let e in data) {
+                const val = data[e];
+                if (e == 0) {
+                    setTag(val.name);
+                    list += `<input type='radio' name='tag' id='tag_${val.name}' checked value='${val.name}' data-color='${val.color}'>`
+                } else {
+                    list += `<input type='radio' name='tag' id='tag_${val.name}' value='${val.name}' data-color='${val.color}'>`
+                }
+                list += `<label for='tag_${val.name}'>${val.title}</label>`;
+            }
+            box.innerHTML = list;
+
+            const tagList = document.querySelectorAll('input[name="tag"]');
+            for (let i = 0; i < tagList.length; i += 1) {
+                const val = tagList[i];
+                val.onchange = function () {
+                    setTag(val.value);
+                    setTagColor(val.getAttribute('data-color'));
+                }
+            }
+        }
+    }
+
+    useEffect(() => {
+        //유저가 아닐 경우 접근 막기
+        if (!userNick || userNick === null) navigate('/');
+        Promise.all([getTags(), getCode()]);
+    }, [userNick, navigate, getTags, getCode])
+
     return (    
         <React.StrictMode>
             <Header />
@@ -146,20 +180,8 @@ export default function PageMyCodeAdd() {
                             <input type='radio' name='private' id='private_N' value='N' onChange={() => {setPrivate('N')}} />
                             <label htmlFor='private_N'>비공개</label>
                         </div>
-                       <div className='category mt-3 sm:mt-0 sm:float-right sm:ml-5 sm:pl-5 sm:border-l'>
-                            <p className='blind'>분류 선택</p>
-                            <input type='radio' name='tag' id='tag_JS' value='JS' onChange={() => {setTag('JS')}} />
-                            <label htmlFor='tag_JS'>javascript</label>
-                            <input type='radio' name='tag' id='tag_git' value='git' onChange={() => {setTag('git')}} />
-                            <label htmlFor='tag_git'>git</label>
-                            <input type='radio' name='tag' id='tag_linux' value='linux' onChange={() => {setTag('linux')}} />
-                            <label htmlFor='tag_linux'>linux</label>
-                            <input type='radio' name='tag' id='tag_mysql' value='mysql' onChange={() => {setTag('mysql')}} />
-                            <label htmlFor='tag_mysql'>mysql</label>
-                            <input type='radio' name='tag' id='tag_FE' value='FE' onChange={() => {setTag('FE')}} />
-                            <label htmlFor='tag_FE'>frontend</label>
-                            <input type='radio' name='tag' id='tag_BE' value='BE' onChange={() => {setTag('BE')}} />
-                            <label htmlFor='tag_BE'>backend</label>
+                       <div id='tags' className='category mt-3 sm:mt-0 sm:float-right sm:ml-5 sm:pl-5 sm:border-l'>
+                            
                         </div>
                         <div className='category sort mt-3 sm:mt-0 sm:float-right sm:text-right'>
                             <p className='blind'>언어 선택</p>

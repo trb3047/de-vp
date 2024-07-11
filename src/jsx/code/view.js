@@ -16,10 +16,6 @@ export default function CodeView() {
     const adChk = userAdmin === 1 && userNick === '블랙라임';
     const idx = new URL(window.location.href).searchParams.get('idx');
 
-    useEffect(() => {
-        getCode();
-    }, [])
-
     async function getCode() {
         const tit = document.getElementById('title');
         const codeBox = document.getElementById('codeBox');
@@ -148,6 +144,11 @@ export default function CodeView() {
             console.log(err);
         }
     }
+    
+    useEffect(() => {
+        getCode();
+    }, [getCode])
+
     return (
         <React.StrictMode>
             <Header />

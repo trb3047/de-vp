@@ -1,32 +1,19 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 //보안 강화한 local storage
 import secureLocalStorage from 'react-secure-storage';
 
 //상단 레이아웃
-/* 
-main menu
-1. 인증 코드
-1. 즐겨찾기 코드(있다면)
-2. 등록된 코드
-3. 마이페이지
-    내 코드 보기
-    코드 작성
-    자주 찾는 코드
-4. 주인장
-
-sub menu
-1. 로그인
-2. 회원가입
-
-카테고리, 태그 분류 계정 정보에 저장돼야 함
-*/
 export default function Header() {
     const secureStorage = secureLocalStorage.default;
+    const navigate = useNavigate();
+    const userID = secureStorage.getItem('id');
     const userNick = secureStorage.getItem('nick');
     const userAdmin = secureStorage.getItem('ad');
     const nowPage = window.location.pathname;
     let { on1, on2, on3, on4, on5 } = '';
     const eventName = 'on';
+    let timer;
     //각 페이지 메뉴 on이벤트
     switch (nowPage) {
         case '/' :
@@ -47,8 +34,33 @@ export default function Header() {
         default:
     }
     if (nowPage.match('mypage')) on4 = eventName;
-    //console.log(nowPage);
-    //console.log(secureStorage);
+
+    //차단된 ID 로그아웃 처리
+    const goOut = useCallback(async () => {
+        try {
+            const res = await fetch('/api/goOut', {
+                method: 'POST',
+                body: JSON.stringify({ userID: userID }),
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            let data = await res.json();
+            //console.log(data);
+            if (res.status === 200) navigate('/logout');
+        } catch (err) {
+            console.log(err);
+        }
+    }, [])
+
+    useEffect(() => {
+        if (userNick) {
+            if(timer) return;
+            timer = setTimeout(() => {
+                goOut();
+            }, 500);
+        }
+    }, [userNick, timer, goOut])
 
     return (
         <header className='pt-10 shadow-md relative'>
@@ -63,7 +75,7 @@ export default function Header() {
                     <dd><a href='/senior' className={on2}>senior</a></dd>
                     <dd><a href='/junior' className={on3}>junior</a></dd>
                     {(() => {
-                        if(userNick) return <dd><a href='/mypage' className={on4}>mypage</a></dd>;
+                        if(userNick) return <dd><a href='/mypage?tag=ALL' className={on4}>mypage</a></dd>;
                     })()}
                     {(() => {
                        if(userAdmin) return <dd><a href='/@admin' className={on5}>admin</a></dd>;
