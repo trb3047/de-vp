@@ -31,10 +31,10 @@ export default function PageMyCodeAdd() {
         setDesc(dataDesc);
         setCode(dataContext);
         setTag(dataTag);
-        setTagColor(dataUseEditor);
+        setTagColor(dataTagColor);
         setPrivate(dataPrivate);
-        if (!dataUseEditor) dataUseEditor = 'JS'; 
-        setUseEditor(dataTagColor);
+        if (!dataUseEditor) dataUseEditor = 'JS';
+        setUseEditor(dataUseEditor);
 
         document.getElementById('tag_' + dataTag).checked = true;
         document.getElementById('private_' + dataPrivate).checked = true;
@@ -154,7 +154,7 @@ export default function PageMyCodeAdd() {
         //유저가 아닐 경우 접근 막기
         if (!userNick || userNick === null) navigate('/');
         Promise.all([getTags(), getCode()]);
-    }, [userNick, navigate, getTags, getCode])
+    }, [])
 
     return (    
         <React.StrictMode>

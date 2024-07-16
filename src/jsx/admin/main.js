@@ -330,8 +330,8 @@ export default function PageAdmin () {
         //관리자 외엔 튕구기
         if(!adChk) navigate('/');
         getUsers();
-    }, [adChk, navigate, getUsers])
-    
+    }, [])
+
     return (
         <React.StrictMode>
             <Header />

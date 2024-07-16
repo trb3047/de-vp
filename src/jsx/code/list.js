@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import secureLocalStorage from 'react-secure-storage';
 import CodeEditor from '../../js/editor.js';
 import Header from '../header.js';
 import Footer from '../footer.js';
@@ -59,6 +58,17 @@ export default function CodeList() {
 
             scrollTimer = 0;
             codeTimer = 0;
+
+            window.onscroll = function (e) {
+                if(scrollTimer === 0) {
+                    const topTarget = document.getElementById('scrollNextPage').getBoundingClientRect().top;
+                    if (topTarget < 1000) {
+                        scrollTimer = 1;
+                        page++;
+                        getCodeList();
+                    }
+                }
+            }
         } catch (err) {
             //console.log(err);
         }
@@ -83,7 +93,7 @@ export default function CodeList() {
             let data = await res.json();
             //console.log(data);
             if (res.status === 200) return data;
-            if (res.status === 401 && ( search.length > 1 || tag !== '*')) codeBox.innerHTML = '<li class="noResult">' + data + '</li>';
+            if (res.status === 401 && ( search.length > 1 || tag !== '*') && page === 0) codeBox.innerHTML = '<li class="noResult">' + data + '</li>';
         } catch (err) {
             console.log(err);
         }
@@ -122,20 +132,7 @@ export default function CodeList() {
 
     useEffect(() => {
         Promise.all([getTags(), getCodeList()]);
-
-        window.onscroll = function (e) {
-            if(scrollTimer === 0) {
-                const topTarget = document.getElementById('scrollNextPage').getBoundingClientRect().top;
-                
-                if (topTarget < 1000) {
-                    scrollTimer = 1;
-                    page++;
-                    getCodeList();
-                }
-            }
-        }
-
-    }, [getTags, getCodeList, scrollTimer, page])
+    }, [])
 
     return (
         <React.StrictMode>

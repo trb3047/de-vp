@@ -158,5 +158,7 @@ function replaceA(target) {
     target = target.replaceAll(' &gt;== ', ' <span class="text-white">==</span> ');
     target = target.replaceAll('&#59;', '<span class="text-white">&#59;</span>');
     target = target.replaceAll('&#44; ', '<span class="text-white">&#44;</span> ');
+    // target = target.replace(/(&#39;)(.*[&#39;^&#34;{0,1}]?)(&#39;)/g, '<span class="text-orange-300">$1$2$3</span>');
+    // target = target.replace(/(&#34;)(.*[&#34;^&#39;{0,1}]?)(&#34;)/g, '<span class="text-orange-300">$1$2$3</span>');
     return target;
 }

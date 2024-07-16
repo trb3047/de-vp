@@ -40,7 +40,7 @@ export default function Comment () {
                             commentList +=
                                         `<li>`
                                         +    `<p class='nick'>${innerVal.date} | ${innerVal.userNick}</p>`
-                                        +    `<p class='cont'>${innerVal.context}</p>`
+                                        +    `<p class='cont'>${(innerVal.private === 'N') ? '[ 비공개 처리된 댓글입니다 ]' : innerVal.context}</p>`
                                         +    `<div class='btnGroup'>`
                                         +       `${(userID === innerVal.userID) ? '<button class="btn delete" data-idx="' + innerVal.idx + '">삭제</button><button class="btn apply edit" data-idx="' + innerVal.idx + '">수정</button>' : ''}`    
                                         +    `</div>`
@@ -208,7 +208,7 @@ export default function Comment () {
 
     useEffect(() => {
         commentAll();
-    }, [commentAll])
+    }, [])
     
     return (
         <React.StrictMode>

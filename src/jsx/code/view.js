@@ -147,7 +147,7 @@ export default function CodeView() {
     
     useEffect(() => {
         getCode();
-    }, [getCode])
+    }, [])
 
     return (
         <React.StrictMode>

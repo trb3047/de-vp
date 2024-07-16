@@ -11,7 +11,7 @@ export default function PageLogout() {
     useEffect(() => {
         secureStorage.clear();
         navigate('/');
-    }, [secureStorage, navigate])
+    }, [])
 
     return (
         <React.StrictMode>

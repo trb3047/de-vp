@@ -5,7 +5,7 @@ import userRouter from './routes/uesrRouter.js';
 //db 관련
 const app = express();
 
-const port = 3001;
+const port = 5000;
 
 //json 형태로 데이터를 받아준다.
 app.use(express.json());
@@ -19,5 +19,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('SERVER 실행됨 port:'+port);
+    console.log('server 실행됨 port:' + port);
 });

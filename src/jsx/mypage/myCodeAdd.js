@@ -19,7 +19,7 @@ export default function PageMyCodeAdd() {
     const [tagColor, setTagColor] = useState('');
     const [privat, setPrivate] = useState('Y');
     const [useEditor, setUseEdittor] = useState('JS');
-    
+
     //에디터 관련
     function compiler(id) {
         const codeBox = document.getElementById(id);
@@ -54,7 +54,7 @@ export default function PageMyCodeAdd() {
 
             if (res.status === 200) {
                 alert(data);
-                navigate('/mypage/myCode');
+                navigate(-1);
             }
             if (res.status === 500) console.log(data);
         } 
@@ -80,6 +80,7 @@ export default function PageMyCodeAdd() {
                 const val = data[e];
                 if (e == 0) {
                     setTag(val.name);
+                    setTagColor(val.color);
                     list += `<input type='radio' name='tag' id='tag_${val.name}' checked value='${val.name}' data-color='${val.color}'>`
                 } else {
                     list += `<input type='radio' name='tag' id='tag_${val.name}' value='${val.name}' data-color='${val.color}'>`
@@ -103,7 +104,7 @@ export default function PageMyCodeAdd() {
         //유저가 아닐 경우 접근 막기
         if (!userNick || userNick === null) navigate('/');
         getTags();
-    }, [userNick, navigate, getTags])
+    }, [])
 
     return (    
         <React.StrictMode>
