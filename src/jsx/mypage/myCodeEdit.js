@@ -110,7 +110,7 @@ export default function PageMyCodeAdd() {
         
         if(res.status === 200) {
             alert(data);
-            navigate('/mypage/myCode');
+            navigate('/myCode');
         }
     } 
 

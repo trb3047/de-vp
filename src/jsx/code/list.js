@@ -4,7 +4,7 @@ import Header from '../header.js';
 import Footer from '../footer.js';
 
 export default function CodeList() {
-    let pageLev = window.location.pathname;
+    const codePage = window.location.pathname;
     const [sort, setSort] = useState('DESC');
     const [tag, setTag] = useState('*');
     const [search, setSearch] = useState('');
@@ -12,16 +12,19 @@ export default function CodeList() {
     let scrollTimer = 0;
     let lev = '';
     let codeTimer = 0;
-    switch (pageLev) {
+    let view = '';
+    switch (codePage) {
         case '/senior' :
             lev = 2;
+            view = '/seniorCode';
             break;
         case '/junior' :
             lev = 1;
+            view = '/juniorCode';
             break;
         default :
             lev = 0;
-            pageLev = '';
+            view = '/code';
     }
 
     const getCodeList = async function () {
@@ -43,7 +46,7 @@ export default function CodeList() {
                     desc = title.replace(search, '<i class="highlight">' + search + '</i>');
                 }
 
-                result += '<li><a href="' + pageLev + '/code?idx=' + idx + '">'
+                result += `<li><a href='${view}?idx=${idx}'>`
                     + `<h4><i class='icon' style='background-color:${tagColor}'>${tag}</i> ` 
                     + title + '</h4>'
                     + '<p class="date">' + date + ' | ' + userNick + ' | 즐겨찾기: ' + recomand + '</p>'

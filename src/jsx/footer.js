@@ -9,7 +9,7 @@ export default class Footer extends React.Component  {
                     <dt className="blind">관련 사이트 링크</dt>
                     <dd><a href="https://github.com/trb3047/de-vp/" target="_blank" rel="noopener noreferrer">소스코드 GitHub</a></dd>
                 </dl>
-                <p className="copy mt-3 text-sm">Copyright © 2024 최성훈 BLKLIME<br />tailwindcss / react / nodejs / GitHub / Nginx / AWS</p>
+                <p className="copy mt-3 text-sm">Copyright © 2024 최성훈 BLKLIME<br />tailwindcss / react / nodejs / GitHub / Nginx / AWS (EC2, RDS, ROUTE 53)</p>
             </footer>
         );
     }

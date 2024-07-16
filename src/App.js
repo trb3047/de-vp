@@ -37,13 +37,13 @@ export default function App() {
         <Route path='/FindPW' element={<PageFindPW />}></Route>
         <Route path='/FindPwResult' element={<PageFindPwResult />}></Route>
         <Route path='/mypage' element={<PageMypage />}></Route>
-        <Route path='/mypage/cheatSheet' element={<PageMyCheat />}></Route>
-        <Route path='/mypage/myCode' element={<PageMyCode />}></Route>
-        <Route path='/mypage/myCodeAdd' element={<PageMyCodeAdd />}></Route>
-        <Route path='/mypage/myCodeEdit' element={<PageMyCodeEdit />}></Route>
+        <Route path='/cheatSheet' element={<PageMyCheat />}></Route>
+        <Route path='/myCode' element={<PageMyCode />}></Route>
+        <Route path='/myCodeAdd' element={<PageMyCodeAdd />}></Route>
+        <Route path='/myCodeEdit' element={<PageMyCodeEdit />}></Route>
         <Route path='/code' element={<PageCodeView />}></Route>
-        <Route path='/senior/code' element={<PageCodeView />}></Route>
-        <Route path='/junior/code' element={<PageCodeView />}></Route>
+        <Route path='/juniorCode' element={<PageCodeView />}></Route>
+        <Route path='/seniorCode' element={<PageCodeView />}></Route>
         <Route path='/contact' element={<PageContact />}></Route>
 
         <Route path='/@admin' element={<PageAdmin />}></Route>

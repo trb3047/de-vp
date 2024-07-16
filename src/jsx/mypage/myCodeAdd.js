@@ -152,7 +152,7 @@ export default function PageMyCodeAdd() {
                         </div>
                     </article>
                     <div className='btnGroup text-right w-full mt-5'>
-                        <a href='/mypage/myCode' className='btn'>취소</a>
+                        <a href='/myCode' className='btn'>취소</a>
                         <button className='btn apply' onClick={submit}>code 작성</button>
                     </div>
                 </div>

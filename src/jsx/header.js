@@ -11,6 +11,7 @@ export default function Header() {
     const userNick = secureStorage.getItem('nick');
     const userAdmin = secureStorage.getItem('ad');
     const nowPage = window.location.pathname;
+    const codePage = new URL(window.location.href).searchParams.get('page');
     let { on1, on2, on3, on4, on5 } = '';
     const eventName = 'on';
     let timer;
@@ -21,19 +22,27 @@ export default function Header() {
             on1 = eventName;
             break;
         case '/senior' :
-        case '/senior/code' :
+        case '/seniorCode' :
             on2 = eventName;
             break;
         case '/junior' :
-        case '/junior/code' :
+        case '/juniorCode' :
             on3 = eventName;
             break;
+        case '/mypage' :
+        case '/cheatSheet' :
+        case '/myCode' :
+        case '/myCodeAdd' :
+        case '/myCodeEdit' :
+                on4 = eventName;
+                break;
         case '/@admin' :
             on5 = eventName;
             break;
         default:
+            if (codePage === 'senior') on2 = eventName;
+            if (codePage === 'junior') on3 = eventName;
     }
-    if (nowPage.match('mypage')) on4 = eventName;
 
     //차단된 ID 로그아웃 처리
     const goOut = useCallback(async () => {

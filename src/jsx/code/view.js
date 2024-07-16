@@ -37,7 +37,7 @@ export default function CodeView() {
         codeBox.innerHTML = '<div class="code ' + data.editor + '">' + codeEditor(data.context) + '</div>';
         
         btn.innerHTML = `<button class='btn' id='btnList'>목록</button>`;
-        if (userNick === data.userNick) btn.innerHTML = btn.innerHTML + '<a href="/mypage/myCodeEdit?idx=' + idx + '" class="btn apply">수정</a>'; 
+        if (userNick === data.userNick) btn.innerHTML = btn.innerHTML + '<a href="/myCodeEdit?idx=' + idx + '" class="btn apply">수정</a>'; 
         if (userNick) btn.innerHTML = btn.innerHTML + `<button class='addFavor ${
             favorCadeData.split(',').map((val) => {
                 return (val === idx) ? 'on' : ''; 
