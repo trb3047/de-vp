@@ -22,6 +22,7 @@ export default function CodeView() {
         const nick = document.getElementById('nick');
         const desc = document.getElementById('desc');
         const btn = document.getElementById('btn');
+        let chkTimer = 0;
         const data = await getCodeView();
         let favorCadeData = await getFavorCode();
 
@@ -51,8 +52,9 @@ export default function CodeView() {
         //즐겨찾기 등록
         if (userNick) {
             document.querySelector('.addFavor').onclick = async function (e) {
+                if (chkTimer === 1) return;
                 if (e.target.className.match('on')) return deleteFavorCode();
-
+                chkTimer = 1;
                 const res1 = await fetch('/api/upRecomand', {
                     method: 'POST',
                     body: JSON.stringify({ idx: idx }),
@@ -155,7 +157,7 @@ export default function CodeView() {
             <main>
                 <div id='cont' className='mt-5'>
                     <h2 className="text-xl text-center" id='title'></h2>
-                    <p id='nick' className='text-sm text-gray-500 text-right'></p>
+                    <p id='nick' className='mt-3 text-sm text-gray-500 text-right'></p>
                     <p id='desc' className='mt-2 mb-2 bg-gray-100 p-2'></p>
                     <article id='codeBox' className="codeBox mt-2 pl-2 pr-2 sm:pl-0 sm:pr-0">
                     </article>

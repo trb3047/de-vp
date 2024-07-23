@@ -64,7 +64,7 @@ i {
     @apply text-sm text-gray-400 p-1 pl-2 pr-2;
 }
 .codeList .desc {
-    @apply m-2 mt-0 sm:line-clamp-2 sm:text-ellipsis text-gray-800;
+    @apply m-2 mt-0 sm:line-clamp-1 sm:text-ellipsis text-gray-800;
 }
 /* cheat sheet */
 .cheatSheet {

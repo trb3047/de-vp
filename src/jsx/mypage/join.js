@@ -13,7 +13,7 @@ export default function PageJoin() {
     //중복검사
     const [okId, setOkId] = useState(false);
     const [okNick, setOkNick] = useState(false);
-
+    let chkTimer = 0;
     const navigate = useNavigate();
     
     const idCheck = async () => {
@@ -87,6 +87,7 @@ export default function PageJoin() {
     }
 
     const submit = async () => {
+        if (chkTimer !== 0) return;
         //유효성 체크
         const pwReg = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/;
         const emailReg = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
@@ -100,6 +101,7 @@ export default function PageJoin() {
         if (!emailReg.test(email)) return alert('이메일 형식을 맞춰서 입력해 주세요');
 
         try {
+            chkTimer = 1;
             //회원가입 정보를 해당 경로로 보내기
             //미리 설정해놓은 라우터가 받음, 포트 관련 문제 발생 시 프록시 설정하기
             const res = await fetch('/api/signup', {
@@ -116,6 +118,7 @@ export default function PageJoin() {
                 alert(data);
                 navigate('/login');
             }
+            chkTimer = 0;
         } 
         //에러 처리, 이 경우에는 브라우저 콘솔에 나온다
         catch(err) {
@@ -150,11 +153,11 @@ export default function PageJoin() {
                         </li>
                         <li><label htmlFor="passwordCheck">비밀번호 확인</label>
                             <input type="password" id="passwordCheck" placeholder="passwordCheck" className="input" value={pw2} onChange={(e) => setPw2(e.target.value)} />
-                            <p className="w-full float-left mt-2">위와 동일한 비밀번호를 입력해주세요.</p>
+                            <p className="w-full float-left mt-2">위와 동일한 비밀번호를 입력해 주세요.</p>
                         </li>
                         <li><label htmlFor="email">email</label>
                             <input type="text" id="email" placeholder="email address" className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
-                            <p className="w-full float-left mt-2">영문,숫자,특수문자를 조합한 8자리 이상의 비밀번호를 입력해주세요.</p>
+                            <p className="w-full float-left mt-2">이메일 주소를 입력해 주세요.</p>
         
                         </li>
                     </ul>

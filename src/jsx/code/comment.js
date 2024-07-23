@@ -9,6 +9,7 @@ export default function Comment () {
     const idx = new URL(window.location.href).searchParams.get('idx');
     const [comment, setComment] = useState('');
     let commentID = 0;
+    let chkTimer = 0;
 
     async function commentAll () {
         const res = await fetch('/api/getComment', {
@@ -83,8 +84,10 @@ export default function Comment () {
 
                     target.querySelector('form').onsubmit = async function (e) {
                         if(!userNick) return alert('로그인이 필요합니다');
+                        if (chkTimer !== 0) return;
                         let commentIndex = e.target.getAttribute('data-target');
                         try {
+                            chkTimer = 1;
                             const today = new Date();
                             const thisDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')} ${today.getHours().toString().padStart(2, '0')}:${today.getMinutes().toString().padStart(2, '0')}`;
                             
@@ -101,6 +104,7 @@ export default function Comment () {
                                 alert(data);
                                 commentAll();
                             }
+                            chkTimer = 0;
                         } catch (err) {
                             console.log(err);
                         }

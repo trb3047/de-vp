@@ -19,6 +19,7 @@ export default function PageMyCodeAdd() {
     const [tagColor, setTagColor] = useState('');
     const [privat, setPrivate] = useState('Y');
     const [useEditor, setUseEdittor] = useState('JS');
+    let chkTimer = 0;
 
     //에디터 관련
     function compiler(id) {
@@ -36,10 +37,13 @@ export default function PageMyCodeAdd() {
     }
 
     async function submit () {
+        if (chkTimer !== 0) return;
         if (!tit) return alert('제목을 입력해 주세요');
+        if (!desc) return alert('부가 설명을 입력해 주세요');
         if (!code) return alert('code를 작성해 주세요');
 
         try {
+            chkTimer = 1;
             const today = new Date();
             const thisDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')} ${today.getHours().toString().padStart(2, '0')}:${today.getMinutes().toString().padStart(2, '0')}`;
 
@@ -54,9 +58,10 @@ export default function PageMyCodeAdd() {
 
             if (res.status === 200) {
                 alert(data);
-                navigate(-1);
+                navigate('/myCode?tag=ALL');
             }
             if (res.status === 500) console.log(data);
+            chkTimer = 0;
         } 
         catch(err) {
             console.log(err);
@@ -119,7 +124,7 @@ export default function PageMyCodeAdd() {
                         </li>
                         <li className='pl-2 pr-2 mt-2'>
                             <label htmlFor="desc" className='block w-full'>설명</label>
-                            <input type="text" id="desc" placeholder="부가 설명이 필요하다면 입력해 주세요" className="input w-full mt-2" value={desc} onChange={(e) => setDesc(e.target.value)} />
+                            <input type="text" id="desc" placeholder="부가 설명을 입력해 주세요" className="input w-full mt-2" value={desc} onChange={(e) => setDesc(e.target.value)} />
                         </li>
                     </ul>
                     <article className='searchGroup text-right overflow-hidden mt-5'>

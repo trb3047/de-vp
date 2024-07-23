@@ -134,7 +134,8 @@ export default function CodeList() {
     }
 
     useEffect(() => {
-        Promise.all([getTags(), getCodeList()]);
+        getTags();
+        getCodeList();
     }, [])
 
     return (

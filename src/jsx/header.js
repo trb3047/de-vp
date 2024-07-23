@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
+// import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 //보안 강화한 local storage
 import secureLocalStorage from 'react-secure-storage';
@@ -44,8 +45,9 @@ export default function Header() {
             if (codePage === 'junior') on3 = eventName;
     }
 
-    //차단된 ID 로그아웃 처리
-    const goOut = useCallback(async () => {
+    //차단된 ID 로그아웃 처리 / 현재 서비스 환경이 사양이 너무 낮아서 새로고침 할 때나 작동하게끔 처리
+    // const goOut = useCallback(async () => { 
+    const goOut = async () => {
         try {
             const res = await fetch('/api/goOut', {
                 method: 'POST',
@@ -60,7 +62,8 @@ export default function Header() {
         } catch (err) {
             console.log(err);
         }
-    }, [])
+    }
+    // }, [])
 
     useEffect(() => {
         if (userNick) {
@@ -69,7 +72,8 @@ export default function Header() {
                 goOut();
             }, 500);
         }
-    }, [userNick, timer, goOut])
+    }, [])
+    // }, [userNick, timer, goOut])
 
     return (
         <header className='pt-10 shadow-md relative'>
