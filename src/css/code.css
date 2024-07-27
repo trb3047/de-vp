@@ -115,7 +115,7 @@ i {
 
 /* 메인 하단 무한 롤링 이미지 */
 #scrollNextPage {
-    @apply animate-pulse p-2 bg-white;
+    @apply block animate-pulse p-2 bg-white;
 }
 #scrollNextPage::before {
     content: '';

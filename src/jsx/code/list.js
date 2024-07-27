@@ -43,11 +43,11 @@ export default function CodeList() {
                 if(!editor) editor = 'JS';
                 if(search.length > 1) {
                     title = title.replace(search, '<i class="highlight">' + search + '</i>');
-                    desc = title.replace(search, '<i class="highlight">' + search + '</i>');
+                    desc = desc.replace(search, '<i class="highlight">' + search + '</i>');
                 }
 
                 result += `<li><a href='${view}?idx=${idx}'>`
-                    + `<h4><i class='icon' style='background-color:${tagColor}'>${tag}</i> ` 
+                    + `<h4 class='break-keep'><i class='icon' style='background-color:${tagColor}'>${tag}</i> ` 
                     + title + '</h4>'
                     + '<p class="date">' + date + ' | ' + userNick + ' | 즐겨찾기: ' + recomand + '</p>'
                     + '<p class="desc">' + desc + '</p>'
@@ -65,13 +65,15 @@ export default function CodeList() {
             window.onscroll = function (e) {
                 if(scrollTimer === 0) {
                     const topTarget = document.getElementById('scrollNextPage').getBoundingClientRect().top;
-                    if (topTarget < 1000) {
+                    const winHeight = window.innerHeight;
+                    if (topTarget < winHeight) {
                         scrollTimer = 1;
                         page++;
                         getCodeList();
                     }
                 }
             }
+
         } catch (err) {
             //console.log(err);
         }
@@ -136,6 +138,14 @@ export default function CodeList() {
     useEffect(() => {
         getTags();
         getCodeList();
+
+        document.getElementById('scrollNextPage').onclick = function (e) {
+            e.preventDefault();
+            if (codeTimer === 1) return;
+
+            page++;
+            getCodeList();
+        }
     }, [])
 
     return (
@@ -164,7 +174,7 @@ export default function CodeList() {
                 </article> 
                 </form>
                 <ul className='codeList' id='code'></ul>
-                <p id='scrollNextPage'><span className='blind'>다음 목록 불러오기</span></p>
+                <a id='scrollNextPage' href='next'><span className='blind'>다음 목록 불러오기</span></a>
             </main>
             <Footer />
         </React.StrictMode>
