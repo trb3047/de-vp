@@ -83,7 +83,8 @@ export default function PageMyCode() {
     useEffect(() => {
         //유저가 아닐 경우 접근 막기
         if(!userNick || userNick === null) navigate('/');
-        Promise.all([getTags(), getCode()]);
+        getTags();
+        getCode();
     }, [])
 
     return (    
