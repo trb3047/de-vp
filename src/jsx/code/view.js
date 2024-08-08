@@ -119,7 +119,6 @@ export default function CodeView() {
             favorCadeData.split(',').map((val) => {
                 if (val !== idx) favorCode.push(val); 
             });
-
             const res1 = await fetch('/api/downRecomand', {
                 method: 'POST',
                 body: JSON.stringify({ idx: idx }),
@@ -130,7 +129,7 @@ export default function CodeView() {
             if(res1.status === 200) {
                 const res2 = await fetch('/api/deleteFavorCode', {
                     method: 'POST',
-                    body: JSON.stringify({ userID: userID, favorCode: favorCode.join(',') }),
+                    body: JSON.stringify({ userID: userID, favorCode: favorCode.length === 0 ? ',' : favorCode.join(',') }),
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' }
                 });

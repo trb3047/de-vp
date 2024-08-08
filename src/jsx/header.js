@@ -15,7 +15,6 @@ export default function Header() {
     const codePage = new URL(window.location.href).searchParams.get('page');
     let { on1, on2, on3, on4, on5 } = '';
     const eventName = 'on';
-    let timer;
     //각 페이지 메뉴 on이벤트
     switch (nowPage) {
         case '/' :
@@ -66,12 +65,7 @@ export default function Header() {
     // }, [])
 
     useEffect(() => {
-        if (userNick) {
-            if(timer) return;
-            timer = setTimeout(() => {
-                goOut();
-            }, 500);
-        }
+        goOut();
     }, [])
     // }, [userNick, timer, goOut])
 
