@@ -149,7 +149,7 @@ export default function CodeList() {
     }, [])
 
     return (
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <form action='javascript:;' onSubmit={getCodeList}>
@@ -177,6 +177,6 @@ export default function CodeList() {
                 <a id='scrollNextPage' href='next'><span className='blind'>다음 목록 불러오기</span></a>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

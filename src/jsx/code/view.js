@@ -151,7 +151,7 @@ export default function CodeView() {
     }, [])
 
     return (
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <div id='cont' className='mt-5'>
@@ -165,6 +165,6 @@ export default function CodeView() {
                 </div>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

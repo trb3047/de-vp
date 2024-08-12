@@ -44,7 +44,7 @@ export default function PageLogin() {
     }
 
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <form action='javscript:;' onSubmit={findPwSubmit}>
@@ -61,6 +61,6 @@ export default function PageLogin() {
                 </form>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

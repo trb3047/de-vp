@@ -41,7 +41,7 @@ export default function PageFindID() {
     }
 
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <form action='javscript:;' onSubmit={findIdSubmit}>
@@ -62,6 +62,6 @@ export default function PageFindID() {
                 </form>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

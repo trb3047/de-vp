@@ -4,7 +4,7 @@ import Footer from './footer.js';
 
 export default function PageInfo() {
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <h2 className="text-xl text-center">Contact</h2>
@@ -46,6 +46,6 @@ export default function PageInfo() {
                 </div>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

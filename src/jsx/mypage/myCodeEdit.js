@@ -163,7 +163,7 @@ export default function PageMyCodeAdd() {
     }, [])
 
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <div id='cont' className='mt-5'>
@@ -215,6 +215,6 @@ export default function PageMyCodeAdd() {
                 </div>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

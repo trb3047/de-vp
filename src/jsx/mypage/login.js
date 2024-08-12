@@ -46,7 +46,7 @@ export default function PageLogin() {
     }
 
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <form action='javascript:;' onSubmit={loginSubmit}>
@@ -69,6 +69,6 @@ export default function PageLogin() {
                 </form>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

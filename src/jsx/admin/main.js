@@ -333,7 +333,7 @@ export default function PageAdmin () {
     }, [])
 
     return (
-        <React.StrictMode>
+        <>
             <Header />
             <main onLoad={getUsers}>
                 <dl className='text-center'>
@@ -348,6 +348,6 @@ export default function PageAdmin () {
                 </div>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

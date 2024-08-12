@@ -87,8 +87,8 @@ export default function PageMypage() {
         getCode();
     }, [])
 
-    return (    
-        <React.StrictMode>
+    return (
+        <>
             <Header />
             <main>
                 <div className='category text-center'>
@@ -110,6 +110,6 @@ export default function PageMypage() {
                 </div>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

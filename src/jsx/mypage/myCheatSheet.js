@@ -92,7 +92,7 @@ export default function PageMyCheat() {
     }, [])
 
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <div className='category text-center'>
@@ -117,6 +117,6 @@ export default function PageMyCheat() {
 
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

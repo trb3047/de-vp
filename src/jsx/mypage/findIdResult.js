@@ -13,7 +13,7 @@ export default function PageFindIdResult() {
     }, [])
 
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <div className="loginBox max-w-screen-sm ml-auto mr-auto text-center">
@@ -24,6 +24,6 @@ export default function PageFindIdResult() {
                 </div>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

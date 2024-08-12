@@ -14,10 +14,10 @@ export default function PageLogout() {
     }, [])
 
     return (
-        <React.StrictMode>
+        <>
             <Header />
 
             <Footer />
-        </React.StrictMode>
+        </>
     )
 } 

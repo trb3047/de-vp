@@ -41,7 +41,7 @@ export default function PageFindPW() {
     }
 
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <form action='javscript:;' onSubmit={findPwSubmit}>
@@ -62,6 +62,6 @@ export default function PageFindPW() {
                 </form>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

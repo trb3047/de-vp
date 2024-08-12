@@ -127,7 +127,7 @@ export default function PageJoin() {
     }
 
     return (    
-        <React.StrictMode>
+        <>
             <Header />
             <main>
                 <div className="max-w-screen-sm ml-auto mr-auto text-center">
@@ -168,6 +168,6 @@ export default function PageJoin() {
                 </div>
             </main>
             <Footer />
-        </React.StrictMode>
+        </>
     );
 }

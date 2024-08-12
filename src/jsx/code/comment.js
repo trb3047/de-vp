@@ -215,7 +215,7 @@ export default function Comment () {
     }, [])
     
     return (
-        <React.StrictMode>
+        <>
             <article className='comment add'>
             <form action='javascript:;' onSubmit={commentSubmit}>
                 <dl>
@@ -228,6 +228,6 @@ export default function Comment () {
             </form>
             </article>
             <ol className='comment' id='commentList'></ol>
-        </React.StrictMode>
+        </>
     )
 }
