@@ -19,8 +19,10 @@ export default function PageJoin() {
     const idCheck = async () => {
         try {
             //유효성 체크
-            const idReg = /[a-z0-9]{4,16}/;
+            const idReg = /^[a-z|0-9]+&{4,16}/;
+            console.log(idReg.test(id));
             if(!idReg.test(id)) return alert('영문, 숫자를 사용한 4~16자리 ID를 입력해 주세요');
+            if(id.length > 16) return alert('16자리를 초과한 닉네임은 사용 불가능합니다');
 
             const input = document.getElementById('id');
             const res = await fetch('/api/idCheck', {
@@ -54,8 +56,10 @@ export default function PageJoin() {
     const nickCheck = async () => {
         try {
             //유효성 체크
-            const Reg = /[a-z0-9가-힣]{2,16}/;
-            if(!Reg.test(nick)) return alert('한글, 영문, 숫자를 사용한 2~16자리 닉네임을 입력해 주세요');
+            const nickReg = /^[A-Z|a-z|0-9|가-힣]+&{2,16}/;
+            console.log(nickReg.test(nick));
+            if(!nickReg.test(nick)) return alert('한글, 영문, 숫자를 사용한 2~16자리 닉네임을 입력해 주세요');
+            if(nick.length > 16) return alert('16자리를 초과한 닉네임은 사용 불가능합니다');
 
             const input = document.getElementById('nick');
             const res = await fetch('/api/nickCheck', {

@@ -41,6 +41,12 @@ export default function CodeList() {
             for (let e in data) {
                 let { idx, title, desc, tag, context, date, userNick, editor, recomand, tagColor } = data[e];
                 if(!editor) editor = 'JS';
+
+                title = title.replaceAll('<', '&lt;');
+                title = title.replaceAll('>', '&gt;');
+                desc = desc.replaceAll('<', '&lt;');
+                desc = desc.replaceAll('>', '&gt;');
+                
                 if(search.length > 1) {
                     title = title.replace(search, '<i class="highlight">' + search + '</i>');
                     desc = desc.replace(search, '<i class="highlight">' + search + '</i>');

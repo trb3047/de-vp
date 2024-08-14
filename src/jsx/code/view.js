@@ -31,9 +31,9 @@ export default function CodeView() {
             navigate('/');
             return;
         }
-        tit.innerHTML = data.title;
-        nick.innerHTML = `${data.date} | ${data.userNick}`;
-        desc.innerHTML = data.desc;
+        tit.innerText = data.title;
+        nick.innerText = `${data.date} | ${data.userNick}`;
+        desc.innerText = data.desc;
         if(!data.editor) data.editor = 'JS';
         codeBox.innerHTML = '<div class="code ' + data.editor + '">' + codeEditor(data.context) + '</div>';
         
