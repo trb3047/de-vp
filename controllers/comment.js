@@ -1,7 +1,5 @@
 import { getComment, commentApplyDB, commentEditDB, commentDeleteDB } from '../database/userDB.js';
 
-
-
 export async function getCommentList(req, res) {
     const { codeID } = req.body;
     try {
